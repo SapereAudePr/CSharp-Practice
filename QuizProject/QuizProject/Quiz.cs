@@ -8,18 +8,21 @@ namespace QuizProject
 {
     class Quiz
     {
-        private Question[] questions;
+        private Question[] _questions;
+        private int _score;
 
         public Quiz(Question[] questions)
         {
-            this.questions = questions;
+            this._questions = questions;
+            _score = 0;
         }
-
+        
         public void StartQuiz()
         {
             Console.WriteLine("Welcome to the quiz!");
             int questionNum = 1;
-            foreach (Question question in questions)
+            
+            foreach (Question question in _questions)
             {
                 Console.WriteLine($"Question: {questionNum++}");
                 DisplayQuestion(question);
@@ -27,12 +30,14 @@ namespace QuizProject
                 if (question.isCorrectAnswer(userChoice))
                 {
                     Console.WriteLine("Correct!");
+                    _score++;
                 }
                 else
                 {
-                    Console.WriteLine($"Wrong! Correct answer is: {question.CorrectAnswerIndex}");
+                    Console.WriteLine($"Wrong! Correct answer was: {question.Answers[question.CorrectAnswerIndex]}");
                 }
             }
+            DisplayResults();
         }
 
         private void DisplayQuestion(Question question)
@@ -71,6 +76,37 @@ namespace QuizProject
             }
 
             return choice - 1;
+        }
+
+        private void DisplayResults()
+        {
+            Console.WriteLine($"Your score is: {_score}/{_questions.Length}");
+
+            double scoreAverage = (double)_score / _questions.Length;
+            if (scoreAverage >= 0.8)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Well Done!");
+                Console.ResetColor();
+            }
+            else if (scoreAverage >= 0.5)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Not Bad!");
+                Console.ResetColor();
+            }
+            else if (scoreAverage >= 0.3)
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("Meh!");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Booo!");
+                Console.ResetColor();
+            }
         }
     }
 }

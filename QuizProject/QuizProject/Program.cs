@@ -12,15 +12,19 @@
                 ),
                 new Question("What is 2 + 2?",
                 new string[] {"6", "20", "3", "4"},
-                4
+                3
                 ),
                 new Question("What is the capital of Turkey?",
                 new string[] {"Paris", "Berlin", "Madrid", "Ankara"},
-                4
+                3
                 ),
                 new Question("What's this language?",
                 new string[] {"Python", "C++", "C#", "C"},
-                3
+                2
+                ),
+                new Question("Which one is an animal?",
+                new string[] {"Car", "Bird", "Phone", "Water"},
+                1
                 ),
             };
 
