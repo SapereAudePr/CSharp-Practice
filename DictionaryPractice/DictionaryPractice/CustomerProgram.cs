@@ -30,7 +30,7 @@ namespace DictionaryPractice
             string userName = Console.ReadLine();
 
             Console.WriteLine("Enter user age:");
-            bool parseUserAge = int.TryParse(Console.ReadLine(), out int userAge);
+            if (!int.TryParse(Console.ReadLine(), out int userAge)) Console.WriteLine("Invalid age");
 
             Console.WriteLine("Enter user city:");
             string userCity = Console.ReadLine();
@@ -38,9 +38,32 @@ namespace DictionaryPractice
             Console.WriteLine("Enter user language:");
             string userLanguage = Console.ReadLine();
 
-            if (!_customer.TryAdd(_customer.Keys.Last() +1, new Customer(userName, userAge, userCity, userLanguage))) Console.WriteLine("Error");
+            // Find the latest key of the dictionary
+            int newKey = _customer.Any() ? _customer.Keys.Max() + 1 : 1;
 
-            Console.WriteLine($"New user added: {_customer.Keys} | {userName} | {userAge} | {userCity} | {userLanguage}");
+            if (!_customer.TryAdd(newKey, new Customer(userName, userAge, userCity, userLanguage))) Console.WriteLine("Error");
+
+            Console.WriteLine($"New user added: {userName} | {userAge} | {userCity} | {userLanguage}");
+        }
+
+        public void SearchUser()
+        {
+            Console.WriteLine("Enter the user name you want to find");
+            string? userInput = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(userInput))
+            {
+                Console.WriteLine("Invalid input");
+                return;
+            }
+
+            foreach (var value in _customer.Values)
+            {
+                if (value.Name.Equals(userInput, StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine($"User found: {value.Name} | {value.Age} | {value.City} | {value.Language}");
+                }
+            }
         }
     }
 }

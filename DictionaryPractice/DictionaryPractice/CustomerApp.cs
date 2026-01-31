@@ -16,6 +16,7 @@ namespace DictionaryPractice
             ["!displayDb"] = "see database of customers",
             ["!addNewUser"] = "add new user to database",
             ["!quit"] = "quit program",
+            ["!searchUser"] = "search a user in the database"
         };
 
         static void Main(string[] args)
@@ -69,6 +70,9 @@ namespace DictionaryPractice
 
                     case "!addNewUser":
                         program.AddNewCustomer();
+                        break;
+                    case "!searchUser":
+                        program.SearchUser();
                         break;
 
                     case "!quit":
