@@ -38,9 +38,9 @@ namespace DictionaryPractice
             Console.WriteLine("Enter user language:");
             string userLanguage = Console.ReadLine();
 
-            if (!_customer.TryAdd(5, new Customer(userName, userAge, userCity, userLanguage))) Console.WriteLine("Error");
+            if (!_customer.TryAdd(_customer.Keys.Last() +1, new Customer(userName, userAge, userCity, userLanguage))) Console.WriteLine("Error");
 
-            Console.WriteLine($"New user added: {userName} | {userAge} | {userCity} | {userLanguage}");
+            Console.WriteLine($"New user added: {_customer.Keys} | {userName} | {userAge} | {userCity} | {userLanguage}");
         }
     }
 }

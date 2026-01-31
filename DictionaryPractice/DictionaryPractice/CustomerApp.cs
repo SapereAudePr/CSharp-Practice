@@ -47,7 +47,6 @@ namespace DictionaryPractice
             Console.WriteLine("Welcome!");
             Console.WriteLine($"Type \"!help\" to see the commands");
 
-
             while (true)
             {
                 string? userInput = Console.ReadLine();
