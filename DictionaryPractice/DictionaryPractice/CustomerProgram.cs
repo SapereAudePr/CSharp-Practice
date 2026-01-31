@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,21 @@ namespace DictionaryPractice
 
         public void AddNewCustomer()
         {
-            
+            Console.WriteLine("Enter user name: ");
+            string userName = Console.ReadLine();
+
+            Console.WriteLine("Enter user age:");
+            bool parseUserAge = int.TryParse(Console.ReadLine(), out int userAge);
+
+            Console.WriteLine("Enter user city:");
+            string userCity = Console.ReadLine();
+
+            Console.WriteLine("Enter user language:");
+            string userLanguage = Console.ReadLine();
+
+            if (!_customer.TryAdd(5, new Customer(userName, userAge, userCity, userLanguage))) Console.WriteLine("Error");
+
+            Console.WriteLine($"New user added: {userName} | {userAge} | {userCity} | {userLanguage}");
         }
     }
 }
