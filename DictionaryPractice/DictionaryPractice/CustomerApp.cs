@@ -10,12 +10,12 @@ namespace DictionaryPractice
     {
         private static Dictionary<int, Customer> _customers;
 
-        private static List<string> _commands = new List<string>()
-            {
-                "!help",
-                "!displayDb",
-                "!quit",
-            };
+        private static Dictionary<string, string> _commands = new()
+        {
+            ["!help"] = "see commands",
+            ["!displayDb"] = "see database of customers",
+            ["!quit"] = "quit program"
+        };
 
         static void Main(string[] args)
         {
@@ -46,32 +46,32 @@ namespace DictionaryPractice
             Console.WriteLine("Welcome!");
             Console.WriteLine($"Type \"!help\" to see the commands");
 
-            
 
             while (true)
             {
                 string? userInput = Console.ReadLine();
 
-                if (!_commands.Contains(userInput) || string.IsNullOrWhiteSpace(userInput))
+                if (string.IsNullOrWhiteSpace(userInput) || !_commands.Keys.Contains(userInput))
                 {
-                    Console.WriteLine($"Unknown Command. Type \"!help\" to see commands");
+                    Console.WriteLine("Unknown command!");
                     continue;
                 }
 
                 switch (userInput)
                 {
-                    case var cmd when cmd == _commands[0]:
+                    case "!help":
                         PrintCommands();
                         break;
-                    case var cmd when cmd == _commands[1]:
+
+                    case "!displayDb":
                         program.PrintDb();
                         break;
-                    case var cmd when cmd == _commands[2]:
+
+                    case "!quit":
                         Console.WriteLine("Goodbye!");
                         return;
 
                     default:
-                        Console.WriteLine($"Unknown command, please type \"!help\" to see commands");
                         break;
                 }
             }
@@ -79,9 +79,12 @@ namespace DictionaryPractice
 
         private static void PrintCommands()
         {
-            foreach (string command in _commands)
+            int counter = 1;
+
+            foreach (var (key, value) in _commands)
             {
-                Console.WriteLine($"\n{command}");
+                Console.Write("> ");
+                Console.WriteLine($"{counter++}- \"{key}\": {value}");
             }
         }
     }
