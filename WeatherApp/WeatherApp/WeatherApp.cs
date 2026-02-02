@@ -12,49 +12,24 @@ namespace WeatherApp
 
         private static Dictionary<int, Weather> _weather;
 
-        string[] dayNames =
+        string[] _dayNames =
         [
             "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
         ];
 
+        string[] _seasons =
+        {
+            "Winter", "Spring", "Summer", "Autumn"
+        };
+
         private int dayCount = 0;
 
-        public WeatherApp()
-        {
-            
-        }
+        public WeatherApp() { }
+        
         public void Run()
         {
             InitializeWeather();
             UserTerminal();
-        }
-
-        private void UserTerminal()
-        {
-            Console.WriteLine("Welcome!");
-            Console.WriteLine("Enter city name.");
-            string? cityAnswer = Console.ReadLine();
-
-            while (true)
-            {
-                
-                if (!string.IsNullOrWhiteSpace(cityAnswer))
-
-                cityAnswer = cityAnswer.Trim();
-
-                bool isCityExist = _weather.Values.Any(w => w.CityName.Equals(cityAnswer, StringComparison.OrdinalIgnoreCase));
-                if (!isCityExist)
-
-                Console.WriteLine("Enter day amount");
-                string? dayAnswer = Console.ReadLine();
-                if (!int.TryParse(dayAnswer, out dayCount) || dayCount <= 0)
-
-                break;
-            }
-
-            
-
-            ExecuteProgram(cityAnswer ,dayCount);
         }
 
         private void InitializeWeather()
@@ -66,24 +41,88 @@ namespace WeatherApp
             };
         }
 
-        private int ExecuteProgram(string city ,int dayAmount)
+        private void UserTerminal()
         {
-            int initialTemp = 0;
-            int minTemp = -5;
-            int maxTemp = 5;
+            Console.WriteLine("Welcome!");
+            Console.WriteLine("Enter city name.");
+            string? cityAnswer = Console.ReadLine();
+            
 
-            initialTemp = _weather[1].Temperature;
+            while (true)
+            {
+
+                if (string.IsNullOrWhiteSpace(cityAnswer))
+                {
+                    Console.WriteLine("Invalid input");
+                    cityAnswer = Console.ReadLine();
+                    continue;
+                }
+
+
+                cityAnswer = cityAnswer.Trim();
+
+                bool isCityExist = _weather.Values.Any(w => w.CityName.Equals(cityAnswer, StringComparison.OrdinalIgnoreCase));
+                if (!isCityExist)
+                {
+                    Console.WriteLine("City not found");
+                    cityAnswer = Console.ReadLine();
+                    continue;
+                }
+
+
+                Console.WriteLine("Enter day amount");
+                string? dayAnswer = Console.ReadLine();
+                if (!int.TryParse(dayAnswer, out dayCount) || dayCount <= 0)
+                {
+                    dayAnswer = Console.ReadLine();
+                    continue;
+                }
+
+                break;
+            }
+
+            ExecuteProgram(cityAnswer, dayCount);
+        }
+
+        private int ExecuteProgram(string city, int dayAmount)
+        {
+            int minTemp = -5;
+            int maxTemp = 6;
+
+            int minWind = -5;
+            int maxWind = 6;
+
+            Weather selectedCity = _weather.Values.First(i => i.CityName.Equals(city, StringComparison.OrdinalIgnoreCase));
+
+            int initialTemp = selectedCity.Temperature;
+            int initialWind = selectedCity.Wind;
+
+            string currentSeason = _seasons[_random.Next(_seasons.Length)];
+
+            int weekNum = 0;
+
+            Console.WriteLine($"\nSeason: -----------{currentSeason.ToUpper()}-----------");
 
             for (int i = 0; i < dayAmount; i++)
             {
-                string day = dayNames[i % 7];
+                string day = _dayNames[i % 7];
+                
                 initialTemp += _random.Next(minTemp, maxTemp);
                 int currentTemp = initialTemp;
 
-                Console.WriteLine($"City: {city.ToUpper()} | Day: {day} | Temperature: {currentTemp}");
-            }
+                initialWind += _random.Next(minWind, maxWind);
+                int currentWind = initialWind;
 
-            
+                if (i % 7 == 0)
+                {
+                    weekNum = (i / 7) + 1;
+
+                    Console.WriteLine($"\nWeek- {weekNum}\n");
+                }
+
+                
+                Console.WriteLine($"{i + 1}--)  City: {city.ToUpper()} | Day: {day} | Temperature: {currentTemp} | Wind: {currentWind}");
+            }
 
             return dayAmount;
         }
