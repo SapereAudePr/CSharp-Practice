@@ -63,6 +63,11 @@ namespace DictionaryPractice
                 {
                     Console.WriteLine($"User found: {value.Name} | {value.Age} | {value.City} | {value.Language}");
                 }
+                else
+                {
+                    Console.WriteLine("User not found.");
+                    break;
+                }
             }
         }
     }
