@@ -46,7 +46,6 @@ namespace WeatherApp
             Console.WriteLine("Welcome!");
             Console.WriteLine("Enter city name.");
             string? cityAnswer = Console.ReadLine();
-            
 
             while (true)
             {
