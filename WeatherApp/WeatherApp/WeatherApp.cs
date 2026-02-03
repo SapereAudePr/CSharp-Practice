@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,7 +50,7 @@ namespace WeatherApp
             _weather = new Dictionary<int, Weather>
             {
                 [1] = new Weather(Cities.Ankara.ToString(), GetTemperature(Cities.Ankara.ToString()), GetWind(Cities.Ankara.ToString())),
-                [1] = new Weather(Cities.Adana.ToString(), GetTemperature(Cities.Adana.ToString()), GetWind(Cities.Adana.ToString())),
+                [2] = new Weather(Cities.Adana.ToString(), GetTemperature(Cities.Adana.ToString()), GetWind(Cities.Adana.ToString())),
             };
         }
 
@@ -178,11 +180,15 @@ namespace WeatherApp
 
         private int ExecuteProgram(string city, int dayAmount)
         {
-            int minTemp = -5;
-            int maxTemp = 6;
+            int currentTemp = 0;
 
-            int minWind = -5;
-            int maxWind = 6;
+            int minTempValue = -5;
+            int maxTempValue = 6;
+
+            int currentWind = 0;
+
+            int minWindValue = -5;
+            int maxWindValue = 6;
 
             Weather selectedCity = _weather.Values.First(i => i.CityName.Equals(city, StringComparison.OrdinalIgnoreCase));
 
@@ -191,17 +197,42 @@ namespace WeatherApp
 
             int weekNum = 0;
 
+            int[] temperatureArr = new int[dayAmount];
+
+            int lowestTemp = initialTemp;
+            int lowestTempDay = 0;
+
+            int highestTemp = initialTemp;
+            int highestTempDay = 0;
+
             Console.WriteLine($"\nSeason: -----------{currentSeason.ToString().ToUpper()}-----------");
 
             for (int i = 0; i < dayAmount; i++)
             {
                 string day = _dayNames[i % 7];
 
-                initialTemp += _random.Next(minTemp, maxTemp);
-                int currentTemp = initialTemp;
+                if (i != 0)
+                {
+                    initialTemp += _random.Next(minTempValue, maxTempValue);
+                    currentTemp = initialTemp;
 
-                initialWind += _random.Next(minWind, maxWind);
-                int currentWind = initialWind;
+                    initialWind += _random.Next(minWindValue, maxWindValue);
+                    currentWind = initialWind;
+                }
+
+                temperatureArr[i] = currentTemp;
+
+                if (temperatureArr[i] < lowestTemp)
+                {
+                    lowestTemp = temperatureArr[i];
+                    lowestTempDay = i;
+                }
+
+                if (temperatureArr[i] > highestTemp)
+                {
+                    highestTemp = temperatureArr[i];
+                    highestTempDay = i;
+                }
 
                 if (i % 7 == 0)
                 {
@@ -210,9 +241,15 @@ namespace WeatherApp
                     Console.WriteLine($"\nWeek- {weekNum}\n");
                 }
 
-
                 Console.WriteLine($"{i + 1}--)  City: {city.ToUpper()} | Day: {day} | Temperature: {currentTemp} | Wind: {currentWind}");
             }
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"\n-----------------------Statistics-----------------------\n");
+            Console.ResetColor();
+
+            Console.WriteLine($"Coldest Temperature: {lowestTemp} | Day: {_dayNames[(lowestTempDay % 7)]}({lowestTempDay + 1}) | Week: {(lowestTempDay / 7) +1}");
+            Console.WriteLine($"Hottest Temperature: {highestTemp} | Day: {_dayNames[highestTempDay % 7]}({highestTempDay + 1}) | Week: {(highestTempDay / 7) +1}");
 
             return dayAmount;
         }
