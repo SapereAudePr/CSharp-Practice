@@ -12,6 +12,12 @@ namespace WeatherApp
 
         private static Dictionary<int, Weather> _weather;
 
+        enum Cities
+        {
+            Ankara,
+            Adana
+        }
+
         string[] _dayNames =
         [
             "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
@@ -41,15 +47,15 @@ namespace WeatherApp
         {
             _weather = new Dictionary<int, Weather>
             {
-                [1] = new Weather("Ankara", GetTemperature("Ankara"), _random.Next(0, 51)),
-                [2] = new Weather("Adana", GetTemperature("Adana"), _random.Next(0, 36)),
+                [1] = new Weather(Cities.Ankara.ToString(), GetTemperature(Cities.Ankara.ToString()), GetWind(Cities.Ankara.ToString())),
+                [1] = new Weather(Cities.Adana.ToString(), GetTemperature(Cities.Adana.ToString()), GetWind(Cities.Adana.ToString())),
             };
         }
 
         private int GetTemperature(string cityName)
         {
             int temperature = 0;
-            currentSeason = (Seasons)_random.Next(Enum.GetValues<Seasons>().Length); 
+            currentSeason = (Seasons)_random.Next(Enum.GetValues<Seasons>().Length);
 
             switch (cityName)
             {
@@ -95,9 +101,41 @@ namespace WeatherApp
                     break;
             }
 
-
             return temperature;
         }
+
+        private int GetWind(string cityName)
+        {
+            int wind = 0;
+
+            switch (cityName)
+            {
+                case "Ankara":
+                    if (currentSeason == Seasons.Winter)
+                        wind = _random.Next(10, 40);
+                    else if (currentSeason == Seasons.Spring)
+                        wind = _random.Next(5, 30);
+                    else if (currentSeason == Seasons.Summer)
+                        wind = _random.Next(0, 20);
+                    else if (currentSeason == Seasons.Autumn)
+                        wind = _random.Next(5, 25);
+                    break;
+
+                case "Adana":
+                    if (currentSeason == Seasons.Winter)
+                        wind = _random.Next(0, 25);
+                    else if (currentSeason == Seasons.Spring)
+                        wind = _random.Next(5, 20);
+                    else if (currentSeason == Seasons.Summer)
+                        wind = _random.Next(0, 15);
+                    else if (currentSeason == Seasons.Autumn)
+                        wind = _random.Next(5, 20);
+                    break;
+            }
+
+            return wind;
+        }
+
 
         private void UserTerminal()
         {
@@ -107,14 +145,12 @@ namespace WeatherApp
 
             while (true)
             {
-
                 if (string.IsNullOrWhiteSpace(cityAnswer))
                 {
                     Console.WriteLine("Invalid input");
                     cityAnswer = Console.ReadLine();
                     continue;
                 }
-
 
                 cityAnswer = cityAnswer.Trim();
 
@@ -125,7 +161,6 @@ namespace WeatherApp
                     cityAnswer = Console.ReadLine();
                     continue;
                 }
-
 
                 Console.WriteLine("Enter day amount");
                 string? dayAnswer = Console.ReadLine();
@@ -153,8 +188,6 @@ namespace WeatherApp
 
             int initialTemp = selectedCity.Temperature;
             int initialWind = selectedCity.Wind;
-
-
 
             int weekNum = 0;
 
