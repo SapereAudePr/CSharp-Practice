@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks.Dataflow;
+﻿using System.Runtime.CompilerServices;
+using System.Threading.Tasks.Dataflow;
 using System.Xml.Linq;
 
 namespace InheritancePractice2
@@ -21,28 +22,24 @@ namespace InheritancePractice2
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public int Age { get; set; }
+        private int _age;
+
+        public int Age
+        {
+            get { return _age +1; } 
+            set { _age = value; }
+        }
 
         public Person(string name, string surname, int age)
         {
             Name = name;
             Surname = surname;
             Age = age;
-
-            AgePlus(Age);
         }
-
-        public int AgePlus(int age)
-        {
-            return age + 1;
-        }
-
         public virtual void DisplayInfo()
         {
             Console.WriteLine($"Name: {Name} | Surname: {Surname} | Age: {Age}");
         }
-
-        
     }
 
     public class Employee: Person
@@ -60,7 +57,7 @@ namespace InheritancePractice2
 
         public override void DisplayInfo()
         {
-            Console.WriteLine($"Name: {Name} | Surname: {Surname} | Age: {Age} | ID: {Id} | Job: {Job} | Salary: {Salary}");
+            Console.WriteLine($"Name: {Name} | Surname: {Surname} | Age: {Age} | ID: {Id} | Job: {Job} | Salary: {Salary:C}");
         }
     }
 
@@ -77,7 +74,7 @@ namespace InheritancePractice2
 
         public override void DisplayInfo()
         {
-            Console.WriteLine($"Name: {Name} | Surname: {Surname} | Age: {Age} | ID: {Id} | Job: {Job} | Salary: {Salary} | Position: {Position} | Team Size: {TeamSize}");
+            Console.WriteLine($"Name: {Name} | Surname: {Surname} | Age: {Age} | ID: {Id} | Job: {Job} | Salary: {Salary:C} | Position: {Position} | Team Size: {TeamSize}");
         }
     }
 
