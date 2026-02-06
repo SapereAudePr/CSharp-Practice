@@ -35,7 +35,7 @@ namespace InterfacePractice
         public void SendMessage(string message)
         {
             string censor = _innerWriter.CensorText(message);
-            Console.WriteLine(censor);
+            Console.WriteLine($"Your input: {censor}");
         }
     }
 
@@ -47,6 +47,9 @@ namespace InterfacePractice
             Chat chat = new Chat(writer);
 
             chat.SendMessage("fuck you");
+
+            ChatApp app = new();
+            app.Terminal();
 
             Console.ReadKey();
         }
