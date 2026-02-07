@@ -3,7 +3,7 @@ namespace InterfacePractice
 {
     public interface IWriter
     {
-        string CensorText(string text);
+        void CensorText(string text);
     }
 
     public class Censor : IWriter
@@ -14,28 +14,19 @@ namespace InterfacePractice
             "shit",
         ];
 
-        public string CensorText(string text)
+        public void CensorText(string text)
         {
             foreach (string word in badWords)
             {
                 text = text.Replace(word, "[CENSORED]");
             }
-            return text;
-        }
-    }
 
-    public class Chat
-    {
-        private readonly IWriter _innerWriter;
-
-        public Chat(IWriter innerWriter)
-        {
-            _innerWriter = innerWriter;
+            DisplayMessage(text);
         }
-        public void SendMessage(string message)
+
+        public void DisplayMessage(string text)
         {
-            string censor = _innerWriter.CensorText(message);
-            Console.WriteLine($"Your input: {censor}");
+            Console.WriteLine(text);
         }
     }
 
@@ -43,13 +34,16 @@ namespace InterfacePractice
     {
         static void Main(string[] args)
         {
-            IWriter writer = new Censor();
-            Chat chat = new Chat(writer);
-
-            chat.SendMessage("fuck you");
-
             ChatApp app = new();
             app.Terminal();
+
+            IPaymentProcessor creditCardProcessor = new CreditCardProcessor();
+            PaymentService cCpaymentService = new(creditCardProcessor);
+            cCpaymentService.ProcessOrderPayment(200.00m);
+
+            IPaymentProcessor paypalProcessor = new PaypalProcessor();
+            PaymentService pPpaymentService = new PaymentService(paypalProcessor);
+            pPpaymentService.ProcessOrderPayment(100.00m);
 
             Console.ReadKey();
         }

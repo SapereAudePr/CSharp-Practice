@@ -15,14 +15,50 @@ namespace InterfacePractice
         {
             Console.WriteLine("Welcome! What would you like to do?");
 
-            IWriter writer = new Censor();
-            Chat chat = new Chat(writer);
+            Censor censor = new Censor();
 
             string? userInput = Console.ReadLine();
 
-            chat.SendMessage(userInput);
+            censor.CensorText(userInput);
+            
 
             
+        }
+    }
+
+    public interface IPaymentProcessor
+    {
+        public void ProcessPayment(decimal amount);
+    }
+
+    public class CreditCardProcessor : IPaymentProcessor
+    {
+        public void ProcessPayment(decimal amount)
+        {
+            Console.WriteLine($"Credit card payment: {amount}");
+        }
+    }
+
+    public class PaypalProcessor : IPaymentProcessor
+    {
+        public void ProcessPayment(decimal amount)
+        {
+            Console.WriteLine($"Paypal payment: {amount}");
+        }
+    }
+
+    public class PaymentService
+    {
+        private readonly IPaymentProcessor _paymentProcessor;
+
+        public PaymentService(IPaymentProcessor paymentProcessor)
+        {
+            _paymentProcessor = paymentProcessor;
+        }
+
+        public void ProcessOrderPayment(decimal amount)
+        {
+            _paymentProcessor.ProcessPayment(amount);
         }
     }
 }
