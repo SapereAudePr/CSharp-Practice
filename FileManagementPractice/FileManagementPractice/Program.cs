@@ -38,7 +38,7 @@ class Program
         string innerFolderName = "Logs";
         string innerFolderPath = Path.Combine(folderPath, innerFolderName);
         string fileName = "log.txt";
-        string filePath = Path.Combine(innerFolderName, fileName);
+        string filePath = Path.Combine(innerFolderPath, fileName);
 
         string[] dirs = Directory.GetDirectories(folderPath, "*", SearchOption.AllDirectories);
         string[] files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
@@ -52,5 +52,8 @@ class Program
         {
             Console.WriteLine($"File: {file} | Creation time: {File.GetCreationTime(file)}");
         }
+
+        string readText = File.ReadAllText(filePath);
+        Console.WriteLine(readText);
     }
 }
