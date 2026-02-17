@@ -25,12 +25,15 @@ class Program
 
         File.AppendAllText(filePath, text);
 
-        GetDirectory();
+        ReadFiles();
 
         Console.ReadKey();
     }
 
-    private static void GetDirectory()
+
+    
+
+    private static void ReadFiles()
     {
         string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         string folderName = "Logs";
@@ -39,21 +42,38 @@ class Program
         string innerFolderPath = Path.Combine(folderPath, innerFolderName);
         string fileName = "log.txt";
         string filePath = Path.Combine(innerFolderPath, fileName);
+        string text = $"Test -- {DateTime.Now} {Environment.NewLine}";
 
         string[] dirs = Directory.GetDirectories(folderPath, "*", SearchOption.AllDirectories);
         string[] files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
 
         foreach (string dir in dirs)
         {
-            Console.WriteLine($"Folder: {dir} | Creation time: {Directory.GetCreationTime(dir)}");
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine($"Path: {Path.GetFullPath(dir)}\n");
+            Console.ResetColor();
+            Console.WriteLine($"Folder: {Path.GetDirectoryName(dir)} | Creation time: {Directory.GetCreationTime(dir)}\n");
         }
 
         foreach (string file in files)
         {
-            Console.WriteLine($"File: {file} | Creation time: {File.GetCreationTime(file)}");
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine($"Path: {Path.GetFullPath(file)}\n");
+            Console.ResetColor();
+            FileInfo info = new FileInfo(file);
+            double sizeInMb = info.Length / 1024 / 1024;
+            Console.WriteLine($"" +
+                $"File: {Path.GetFileName(file)} | " +
+                $"Creation time: {File.GetCreationTime(file)} | " +
+                $"Size: {sizeInMb:F4}MB | " +
+                $"");
         }
 
+        File.AppendAllText(filePath, text);
+
         string readText = File.ReadAllText(filePath);
-        Console.WriteLine(readText);
+        Console.WriteLine($"\nTexts of the file:\n");
+        Console.WriteLine($"{readText}");
+
     }
 }
