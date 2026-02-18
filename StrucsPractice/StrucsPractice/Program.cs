@@ -2,15 +2,29 @@
 {
     internal class Program
     {
+        public enum Nums
+        {
+            One = 1,
+            Two = 2,
+            Three = 3
+        }
+
         public struct Point
         {
-            public int X;
-            public int Y;
+            public double X { get; }
+            public double Y { get; }
 
-            public Point(int x, int y)
+            public Point(double x, double y)
             {
                 X = x;
                 Y = y;
+            }
+
+            public double GetDistance(Point other)
+            {
+                double dx = other.X - X;
+                double dy = other.Y - Y;
+                return Math.Sqrt(dx * dx + dy * dy);
             }
 
             public void Display()
@@ -24,14 +38,15 @@
             Point p1 = new(10, 30);
             p1.Display();
 
-            Point p2;
-            p2.X = 70;
-            p2.Y = 30;
+            Point p2 = new(70, 30);
             p2.Display();
 
-            Point p3 = p2;
-            p3.Y = 80;
-            p3.Display();
+            double distance = p1.GetDistance(p2);
+
+            Console.WriteLine($"Distance: {distance:F4}");
+
+            var num = (int)Nums.One;
+            Console.WriteLine(num);
 
             Console.ReadKey();
         }
