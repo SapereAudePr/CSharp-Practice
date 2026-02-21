@@ -14,6 +14,8 @@ namespace Practice2385
             {
                 "console" => "[ConsoleLOG]",
                 "file" => "[FileLOG]",
+                "email" => "[EMAIL]",
+                "sms" => "[SMS]",
                 _ => null
             };
 

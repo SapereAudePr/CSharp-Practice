@@ -60,5 +60,23 @@ namespace Practice2385
                 _logger.Log(s);
             }
         }
+
+        public class LoggerService
+        {
+            List<ILogger> _logProvider = new();
+
+            public void AddService(ILogger logger)
+            {
+                _logProvider.Add(logger);
+            }
+
+            public void LogAll(string message)
+            {
+                foreach (var provide in _logProvider)
+                {
+                    provide.Log(message);                    
+                }
+            }
+        }
     }
 }

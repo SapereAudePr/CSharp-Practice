@@ -8,52 +8,23 @@ namespace Practice2385
 {
     class NotificationModel
     {
-        public class EmailNotification : INotification
+        public class EmailNotification : BaseNotification
         {
-            public void Send(string recipient, string message)
+            public override void Send(string recipient, string message)
             {
-
+                string cleanMsg = CleanMessage(message);
+                string getTime = GetTime("email");
+                Console.WriteLine($"{getTime} | to {recipient} : {cleanMsg} ");
             }
         }
 
-        public class SmsNotification : INotification
+        public class SmsNotification : BaseNotification
         {
-            public void Send(string recipient, string message)
+            public override void Send(string recipient, string message)
             {
-
-            }
-        }
-
-        public class Notification
-        {
-            INotification _notification;
-
-            public Notification(INotification notification)
-            {
-                _notification = notification;
-            }
-
-            public void Send(string recipient, string message)
-            {
-                _notification.Send(recipient, message);
-            }
-        }
-
-        public class NotificationService
-        {
-            private readonly List<INotification> _providers = new();
-
-            public void AddProvider(INotification provider)
-            {
-                _providers.Add(provider);
-            }
-
-            public void NotifyAll(string recipient, string message)
-            {
-                foreach (var provider in _providers)
-                {
-                    provider.Send(recipient, message);
-                }
+                string cleanMsg = CleanMessage(message);
+                string getTime = GetTime("sms");
+                Console.WriteLine($"{getTime} | to {recipient} : {cleanMsg} ");
             }
         }
     }
