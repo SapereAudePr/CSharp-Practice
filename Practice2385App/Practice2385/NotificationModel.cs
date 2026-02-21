@@ -10,7 +10,7 @@ namespace Practice2385
     {
         public class EmailNotification : INotification
         {
-            public void Send(string recipent, string message)
+            public void Send(string recipient, string message)
             {
 
             }
@@ -18,7 +18,7 @@ namespace Practice2385
 
         public class SmsNotification : INotification
         {
-            public void Send(string recipent ,string message)
+            public void Send(string recipient, string message)
             {
 
             }

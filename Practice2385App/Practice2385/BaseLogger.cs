@@ -8,13 +8,13 @@ namespace Practice2385
 {
     abstract class BaseLogger: ILogger
     {
-        protected string GetTime(string identifier)
+        protected string GetTime(string? identifier)
         {
             var prefix = identifier switch
             {
                 "console" => "[ConsoleLOG]",
                 "file" => "[FileLOG]",
-                _ => throw new Exception("Unknown identifier")
+                _ => null
             };
 
             DateTime now = DateTime.Now;
@@ -27,6 +27,7 @@ namespace Practice2385
                 $"{now.Minute}:" +
                 $"{now.Second}";
         }
+
         public abstract void Log(string s);
     }
 }

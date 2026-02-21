@@ -8,5 +8,6 @@ namespace Practice2385
 {
     interface INotification
     {
+        public void Send(string recipient, string message);
     }
 }
