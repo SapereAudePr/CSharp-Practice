@@ -22,8 +22,6 @@ namespace Practice2385
                 provider.Send(recipient, message);
             }
         }
-
-        
     }
 
     class Notify

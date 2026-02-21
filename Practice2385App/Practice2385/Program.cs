@@ -10,10 +10,6 @@ namespace Practice2385
             LoggerModel.Logger cLogger = new LoggerModel.Logger(consoleLogger);
             cLogger.Log("Test");
 
-            ILogger fileLogger = new LoggerModel.LogFile();
-            LoggerModel.Logger fLogger = new LoggerModel.Logger(fileLogger);
-            fLogger.Log("Test");
-
             //INotification sNotification = new NotificationModel.EmailNotification();
             //INotification eNotification = new NotificationModel.SmsNotification();
             //NotificationService provider = new NotificationService();
@@ -39,7 +35,6 @@ namespace Practice2385
 
             LoggerModel.LoggerService logService = new LoggerModel.LoggerService();
             logService.AddService(new LoggerModel.LogConsole());
-            logService.AddService(new LoggerModel.LogFile());
             logService.LogAll("LOG SERVICE TESTING");
 
             //string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);

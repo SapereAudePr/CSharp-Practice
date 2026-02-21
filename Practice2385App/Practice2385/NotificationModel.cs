@@ -15,6 +15,8 @@ namespace Practice2385
                 string cleanMsg = CleanMessage(message);
                 string getTime = GetTime("email");
                 Console.WriteLine($"{getTime} | to {recipient} : {cleanMsg} ");
+
+                WriteFile("email", message);
             }
         }
 
@@ -25,6 +27,8 @@ namespace Practice2385
                 string cleanMsg = CleanMessage(message);
                 string getTime = GetTime("sms");
                 Console.WriteLine($"{getTime} | to {recipient} : {cleanMsg} ");
+
+                WriteFile("sms", message);
             }
         }
     }

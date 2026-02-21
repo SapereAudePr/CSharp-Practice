@@ -13,36 +13,8 @@ namespace Practice2385
             public override void Log(string s)
             {
                 Console.WriteLine($"{GetTime("console")} : {s}");
-            }
-        }
 
-        public class LogFile : BaseLogger
-        {
-            private readonly string _filePath;
-
-            public LogFile()
-            {
-                _filePath = CreatePath();
-            }
-
-            protected string CreatePath()
-            {
-                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                string folderName = "Logs";
-                string folderPath = Path.Combine(desktopPath, folderName);
-                Directory.CreateDirectory(folderPath);
-
-                string fileName = "logs.txt";
-                string filePath = Path.Combine(folderPath, fileName);
-
-                return filePath;
-            }
-
-            public override void Log(string s)
-            {
-                string logLine = $"{GetTime("file")} : {s}{Environment.NewLine}";
-
-                File.AppendAllText(_filePath, logLine);
+                WriteFile("console" ,s);
             }
         }
 
