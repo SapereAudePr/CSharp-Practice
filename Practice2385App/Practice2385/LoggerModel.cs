@@ -10,11 +10,17 @@ namespace Practice2385
     {
         public class LogConsole : BaseLogger
         {
+            private readonly WriteFileUtility _writeFile = new();
+
+            protected override string Prefix => "[ConsoleLOG]";
+
             public override void Log(string s)
             {
-                Console.WriteLine($"{GetTime("console")} : {s}");
+                string logLine = $"{GetFormattedTime} : {s}";
 
-                WriteFile("console" ,s);
+                Console.WriteLine(logLine);
+
+                _writeFile.WriteFile(Prefix, logLine);
             }
         }
 

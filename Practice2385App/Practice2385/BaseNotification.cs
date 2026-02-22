@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Practice2385
 {
-    abstract class BaseNotification : BaseLogger, INotification
+    abstract class BaseNotification : INotification
     {
-        public abstract void Send(string recipient, string message);
+        protected abstract string Prefix { get; }
 
-        // Notification classes doesn't need this method.
-        // I've initialized empty here so child classes doesn't have to
-        public override void Log(string s) { }
+        protected string GetFormattedTime => $"{Prefix} {DateTime.Now:yyyy:MM:dd - HH:mm:ss}";
 
         protected string CleanMessage(string msg) => msg.Trim();
+
+        public abstract void Send(string recipient, string message);
     }
 }

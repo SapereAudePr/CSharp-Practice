@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,25 +11,32 @@ namespace Practice2385
     {
         public class EmailNotification : BaseNotification
         {
-            public override void Send(string recipient, string message)
-            {
-                string cleanMsg = CleanMessage(message);
-                string getTime = GetTime("email");
-                Console.WriteLine($"{getTime} | to {recipient} : {cleanMsg} ");
+            private readonly WriteFileUtility _writeFile = new();
 
-                WriteFile("email", message);
+            protected override string Prefix => "[EMAIL]";
+
+            public override void Send(string recipient, string msg)
+            {
+                string logLine = $"{GetFormattedTime} | to {recipient} : {CleanMessage(msg)}";
+
+                Console.WriteLine(logLine);
+
+                _writeFile.WriteFile(Prefix, logLine);
             }
         }
 
         public class SmsNotification : BaseNotification
         {
-            public override void Send(string recipient, string message)
-            {
-                string cleanMsg = CleanMessage(message);
-                string getTime = GetTime("sms");
-                Console.WriteLine($"{getTime} | to {recipient} : {cleanMsg} ");
+            private readonly WriteFileUtility _writeFile = new();
+            protected override string Prefix => "[SMS]";
 
-                WriteFile("sms", message);
+            public override void Send(string recipient, string msg)
+            {
+                string logLine = $"{GetFormattedTime} | to {recipient} : {CleanMessage(msg)}";
+
+                Console.WriteLine(logLine);
+
+                _writeFile.WriteFile(Prefix, logLine);
             }
         }
     }
