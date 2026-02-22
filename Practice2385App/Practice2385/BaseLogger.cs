@@ -13,6 +13,8 @@ namespace Practice2385
 
         protected string GetFormattedTime => $"{Prefix} {DateTime.Now:yyyy:MM:dd - HH:mm:ss}";
 
+        protected string CleanMessage(string s) => s.Trim();
+
         public abstract void Log(string s);
     }
 }

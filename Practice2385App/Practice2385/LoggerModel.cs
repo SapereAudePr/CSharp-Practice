@@ -16,44 +16,11 @@ namespace Practice2385
 
             public override void Log(string s)
             {
-                string logLine = $"{GetFormattedTime} : {s}";
+                string logLine = $"{GetFormattedTime} : {CleanMessage(s)}";
 
                 Console.WriteLine(logLine);
 
                 _writeFile.WriteFile(Prefix, logLine);
-            }
-        }
-
-        public class Logger
-        {
-            ILogger _logger;
-
-            public Logger(ILogger logger)
-            {
-                _logger = logger;
-            }
-
-            public void Log(string s)
-            {
-                _logger.Log(s);
-            }
-        }
-
-        public class LoggerService
-        {
-            List<ILogger> _logProvider = new();
-
-            public void AddService(ILogger logger)
-            {
-                _logProvider.Add(logger);
-            }
-
-            public void LogAll(string message)
-            {
-                foreach (var provide in _logProvider)
-                {
-                    provide.Log(message);                    
-                }
             }
         }
     }

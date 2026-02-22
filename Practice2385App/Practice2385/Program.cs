@@ -6,19 +6,6 @@ namespace Practice2385
     {
         static void Main(string[] args)
         {
-            ILogger consoleLogger = new LoggerModel.LogConsole();
-            LoggerModel.Logger cLogger = new LoggerModel.Logger(consoleLogger);
-            cLogger.Log("Test");
-
-            //INotification sNotification = new NotificationModel.EmailNotification();
-            //INotification eNotification = new NotificationModel.SmsNotification();
-            //NotificationService provider = new NotificationService();
-            //provider.AddProvider(sNotification);
-            //provider.AddProvider(eNotification);
-
-            //provider.NotifyAll($"Alice", "Welcome");
-
-
             NotificationService service = new NotificationService();
             service.AddProvider(new NotificationModel.EmailNotification());
             service.AddProvider(new NotificationModel.SmsNotification());
@@ -32,10 +19,13 @@ namespace Practice2385
             Notify sNotify = new Notify(sms);
             sNotify.NotifyOne("Alicia", "Hi");
 
+            ILogger consoleLogger = new LoggerModel.LogConsole();
+            Logger log = new Logger(consoleLogger);
+            log.Log("Log Service One Test");
 
-            LoggerModel.LoggerService logService = new LoggerModel.LoggerService();
+            LoggerService logService = new LoggerService();
             logService.AddService(new LoggerModel.LogConsole());
-            logService.LogAll("LOG SERVICE TESTING");
+            logService.LogAll("Log Service All Test");
 
             //string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             //string folderName = "test";
