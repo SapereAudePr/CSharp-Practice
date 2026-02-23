@@ -2,7 +2,7 @@
 {
     internal class Program
     {
-        public delegate int Comparison<T>(T x, T y);
+        private delegate int Compare<Person>(Person x, Person y);
 
         class Person
         {
@@ -12,17 +12,17 @@
 
         class PersonSorter
         {
-            public void Sort(Person[] people, Comparison<Person> comparison)
+            public void Sort<T>(T[] items, Compare<T> comparison) where T : Person
             {
-                for (int i = 0; i < people.Length - 1; i++)
+                for (int i = 0; i < items.Length - 1; i++)
                 {
-                    for (int j = i + 1; j < people.Length; j++)
+                    for (int j = i + 1; j < items.Length; j++)
                     {
-                        if (comparison(people[i], people[j]) > 0)
+                        if (comparison(items[i], items[j]) > 0)
                         {
-                            Person temp = people[i];
-                            people[i] = people[j];
-                            people[j] = temp;
+                            T temp = items[i];
+                            items[i] = items[j];
+                            items[j] = temp;
                         }
                     }
                 }
@@ -38,9 +38,10 @@
                 new Person {Name = "Bob", Age = 28},
             };
 
-            var sorter = (new PersonSorter());
-            //sorter.Sort(people, CompareByAge);
-            sorter.Sort(people, CompareByName);
+           
+
+            PersonSorter sorter = new();
+            sorter.Sort(people, CompareByAge);
 
             foreach (Person person in people)
             {
@@ -48,6 +49,24 @@
             }
 
             Console.ReadKey();
+        }
+
+        static void SortByAscending(Person[] people)
+        {
+            var result = people.OrderBy(x => x.Age);
+            foreach (var person in result)
+            {
+                Console.WriteLine($"{person.Name} | {person.Age}");
+            }
+        }
+
+        static void SortByDescending(Person[] people)
+        {
+            var result = people.OrderByDescending(x => x.Age);
+            foreach (var person in result)
+            {
+                Console.WriteLine($"{person.Name} | {person.Age}");
+            }
         }
 
         static int CompareByAge(Person x, Person y) => x.Age.CompareTo(y.Age);
