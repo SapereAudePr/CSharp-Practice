@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace Practice2385
+﻿namespace Practice2385
 {
     internal class Program
     {
