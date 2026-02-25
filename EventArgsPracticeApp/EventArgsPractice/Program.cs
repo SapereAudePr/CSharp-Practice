@@ -1,72 +1,60 @@
-﻿namespace EventArgsPractice
+﻿namespace EventArgsPractice;
+internal class Program
 {
-    internal class Program
+    public class TempEventArgs : EventArgs
     {
-        public class TemperatureChangedEventArgs : EventArgs
+        public int Temperature { get; }
+
+        public TempEventArgs(int temperature)
         {
-            public int Temperature { get; }
+            Temperature = temperature;
+        }
+    }
 
-            // TODO: Build these later on
-            // -------------------------------------
-            //public bool IsCritical { get; }
-            //public DateTime Timestamp { get; }
-            //public string SensorId { get; }
-            // -------------------------------------
+    public class TempMonitor
+    {
+        public event EventHandler<TempEventArgs>? HighTemp;
 
-            public TemperatureChangedEventArgs(int temperature)
+        private int _temperature;
+        public int Temperature
+        {
+            get => _temperature;
+
+            set
             {
-                Temperature = temperature;
+                if (_temperature == value) return;
+
+                _temperature = value;
+
+                if (value > 30) RaiseHighTempEvent(new TempEventArgs(value));
             }
         }
 
-        public class TemperatureMonitor
+        protected virtual void RaiseHighTempEvent(TempEventArgs e)
         {
-            public event EventHandler<TemperatureChangedEventArgs> ?HighTemperature;
-
-            private int _temperature;
-            public int Temperature 
-            {
-                get => _temperature;
-
-                set
-                {
-                    if (_temperature == value) return;
-                    _temperature = value;
-
-                    if (value > 30)
-                    {
-                        RaiseHighTempAlert(new TemperatureChangedEventArgs(value));
-                    }
-                }
-            }
-
-            protected virtual void RaiseHighTempAlert(TemperatureChangedEventArgs e)
-            {
-                HighTemperature?.Invoke(this, e);
-            }
+            HighTemp?.Invoke(this, e);
         }
+    }
 
-        public class AlertEvents
+    //Subscribers
+    public class AlertEvent
+    {
+        public void OnHighTempAlert(object? sender, TempEventArgs e)
         {
-            public void OnHighTempAlert(object? sender, TemperatureChangedEventArgs e)
-            {
-                Console.WriteLine($"[OnHighTempAlert] | The temp is: {e.Temperature} and the sender: {sender}");
-            }
+            if (sender is TempMonitor monitor) Console.WriteLine($"Sender's temp: {monitor.Temperature} | Global Temp: {e.Temperature}");
         }
+    }
 
-        static void Main(string[] args)
-        {
-            TemperatureMonitor tempMonitor = new();
-            AlertEvents alertEvents = new();
-            tempMonitor.HighTemperature += alertEvents.OnHighTempAlert;
+    static void Main(string[] args)
+    {
+        TempMonitor monitor = new();
+        AlertEvent events = new();
+        monitor.HighTemp += events.OnHighTempAlert;
 
-            Console.WriteLine("Enter temp input");
-            if (int.TryParse(Console.ReadLine(), out int temp))
-            {
-                tempMonitor.Temperature = temp;
-            }
+        Console.WriteLine("Temp input...");
+        if (int.TryParse(Console.ReadLine(), out int temp)) monitor.Temperature = temp;
+        else throw new Exception("Invalid input");
 
-            Console.ReadKey();
-        }
+        Console.ReadKey();
     }
 }
