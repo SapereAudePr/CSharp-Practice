@@ -2,7 +2,7 @@
 {
     internal class Program
     {
-        private delegate int Compare<Person>(Person x, Person y);
+        private delegate int Compare<T>(T x, T y);
 
         class Person
         {
@@ -12,13 +12,13 @@
 
         class PersonSorter
         {
-            public void Sort<T>(T[] items, Compare<T> comparison) where T : Person
+            public void Sort<T>(T[] items, Compare<T> compare) where T : Person
             {
                 for (int i = 0; i < items.Length - 1; i++)
                 {
                     for (int j = i + 1; j < items.Length; j++)
                     {
-                        if (comparison(items[i], items[j]) > 0)
+                        if (compare(items[i], items[j]) > 0)
                         {
                             T temp = items[i];
                             items[i] = items[j];
@@ -38,10 +38,19 @@
                 new Person {Name = "Bob", Age = 28},
             };
 
-           
+            MulticastDelegate multiCast = new();
+            multiCast.Run();
 
             PersonSorter sorter = new();
+            //sorter.Sort(people, (Person x, Person y) => x.Age.CompareTo(y.Age));
             sorter.Sort(people, CompareByAge);
+
+            var result = people.OrderBy(x => x.Name).ThenBy(x => x.Age);
+
+            foreach (var item in result)
+            {
+                Console.WriteLine(item.Name + " " + item.Age);
+            }
 
             foreach (Person person in people)
             {
