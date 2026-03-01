@@ -1,0 +1,104 @@
+﻿
+
+
+
+
+
+
+
+
+^(https?://)([a-zA-Z0-9]+\.)?[a-zA-Z]+\.[a-zA-Z]+$
+^(https?://)(www\.)?[a-zA-Z]+\.[a-zA-Z]+$
+
+^(Mr|Ms)(\.)?(\s)?[a-zA-Z]+
+
+
+^(https?://)?([a-zA-Z0-9-]+\.)?[a-zA-Z]+\.[a-zA-Z]+(\/[a-zA-Z0-9-]+)?
+
+// Personal numbers
+\b?(?:\+|0)?\(?(?:\d{2,4})?\)?[ \.\-\#]?\d{3}[ \.\-\#]?\d{3}[ \.\-\#]?\d{2}[ \.\-\#]?\d{2}(?:\d{4})?\b
+
+//Personal&Corporote numbers but it's unstable
+\b?(?:\+|0)?\(?(?:\d{2,4})?\)?[ \.\-\#]?\d{3}[ \.\-\#]?\d{1,3}[ \.\-\#]?\d{2,3}[ \.\-\#]?(?:\d{2})?(?:\d{4})?\b
+
+
+0322 551 153 0042
+(0322) 551 153 0042
+5511530042
+05511530042
++90 532 175 98 21
+5321234567
+
+(0212) 444 0 444
+
+0532 123 45 67
+
+1234567890
+
+202-555-0102
+202-555-0196
+202.555.0196
+202#555#0196
+
+0175/12345678
++49165/12312347
+0049165/12312347
+
+abcdefghijklmnopqurtuvwxyz
+ABCDEFGHIIKLMNOPQRSTUVMXYZ
+Lala La La Lala
+
+Mr. Panjuta
+
+Mr Muller
+
+Mr Robertson
+
+Mr.6
+
+Ms Smith
+
+Ms Jackson
+
+Ms. Van der Woodsen
+
+Mr. St. John
+
+
+https: //wa. tutorials .eu
+https://tutorials.eu
+http://www. tutorials.eu
+http://www.tutorials.eu
+http://tutorials.eu
+wa.tutorials.eu
+melihozyesil.cloud
+melihozyesil.cloud/NyxAudio
+
+
+test@test. com
+
+MetaCharacters (Need to be escaped):
+.[{(\/$?*+
+
+
+
+
+
+
+
+
+
+
+regular-expressions.js
+RegularExpressionInput.jsx
+cannot_get_enough_of_regular_expressions.py
+regular _expression_overload.php
+I-heart-kittens.ts
+RegularExpressionOutput.jsx
+regular_expressions_are_ready_ to.go
+even-more-regular-expressions.ts
+
+my favorite_regexes.rb
+Regex-for-fun-and-profit.js
+
+Hey you! Check out my regular expressions!.ts

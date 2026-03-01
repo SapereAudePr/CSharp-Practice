@@ -4,6 +4,10 @@ internal class Program
     public class TempEventArgs : EventArgs
     {
         public int Temperature { get; }
+        private DateTime _time = DateTime.Now;
+        public DateTime Time => _time;
+
+        public string FormattedTime => Time.ToString("HH:mm:ss");
 
         public TempEventArgs(int temperature)
         {
@@ -16,6 +20,7 @@ internal class Program
         public event EventHandler<TempEventArgs>? HighTemp;
 
         private int _temperature;
+
         public int Temperature
         {
             get => _temperature;
@@ -23,10 +28,12 @@ internal class Program
             set
             {
                 if (_temperature == value) return;
-
                 _temperature = value;
 
-                if (value > 30) RaiseHighTempEvent(new TempEventArgs(value));
+                if (value > 30)
+                {
+                    RaiseHighTempEvent(new TempEventArgs(value));
+                }
             }
         }
 
@@ -36,24 +43,26 @@ internal class Program
         }
     }
 
-    //Subscribers
     public class AlertEvent
     {
         public void OnHighTempAlert(object? sender, TempEventArgs e)
         {
-            if (sender is TempMonitor monitor) Console.WriteLine($"Sender's temp: {monitor.Temperature} | Global Temp: {e.Temperature}");
+            if (sender is TempMonitor monitor)
+            {
+                Console.WriteLine($"Time: {e.FormattedTime} | Sender Temperature: {monitor.Temperature} | EventArgs Temperature: {e.Temperature}");
+            }
         }
     }
 
     static void Main(string[] args)
     {
         TempMonitor monitor = new();
-        AlertEvent events = new();
-        monitor.HighTemp += events.OnHighTempAlert;
+        AlertEvent alertEvent = new();
+        monitor.HighTemp += alertEvent.OnHighTempAlert;
 
         Console.WriteLine("Temp input...");
         if (int.TryParse(Console.ReadLine(), out int temp)) monitor.Temperature = temp;
-        else throw new Exception("Invalid input");
+
 
         Console.ReadKey();
     }
