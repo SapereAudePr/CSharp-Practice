@@ -6,10 +6,12 @@ namespace RegexPractical
     {
         static void Main(string[] args)
         {
-            RegexMatches();
+            //RegexMatches();
             //RegexMatch();
             //RegexIsMatch();
-            //RegexReplace();
+            RegexReplace();
+            //RegexExample();
+
             Console.ReadKey();
         }
 
@@ -18,7 +20,7 @@ namespace RegexPractical
         {
             string input = "A228 b765 c12 wqD Xdw U723";
             string pattern = @"[A-Z]\d+";
-            MatchCollection res = Regex.Matches(input, pattern);
+            MatchCollection res = Regex.Matches(input, pattern, RegexOptions.Multiline);
 
             foreach (Match m in res)
             {
@@ -32,9 +34,12 @@ namespace RegexPractical
         {
             string input = "A228 b765 c12 wqD Xdw U723";
             string pattern = @"[A-Z]\d+";
-            Match res = Regex.Match(input, pattern);
-            string matchRes = res.Value;
-            Console.WriteLine(matchRes);
+            Match res = Regex.Match(input, pattern, RegexOptions.Multiline);
+            if (res.Success)
+            {
+                string matchRes = res.Value;
+                Console.WriteLine(matchRes);
+            }
         }
 
         // Returns *BOOL* for match || T<BOOL>
@@ -51,8 +56,13 @@ namespace RegexPractical
         {
             string input = "User-551-ID:153-Session:691";
             string pattern = @"(\w+\-\d+)-(\w+:\d+)-(\w+:\d+)";
-            string res = Regex.Replace(input, pattern, "$1 | <classified> | $3");
+            string res = Regex.Replace(input, pattern, "1 | ******* | 3");
             Console.WriteLine(res);
+
+            string inpt = "DQW259FFQWF582@259A";
+            string pattrn = @"[a-zA-Z@]";
+            string result = Regex.Replace(inpt, pattrn, "");
+            Console.WriteLine(result);
         }
 
         static void RegexExample()
