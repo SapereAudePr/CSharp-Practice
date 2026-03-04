@@ -1,0 +1,55 @@
+
+
+
+^(https?://)?([a-zA-Z0-9-]+\.)?[a-zA-Z]+\.[a-zA-Z]+(\/[a-zA-Z0-9-]+)?
+
+--- NAMES & TITLES ---
+Dr. Elizabeth Montgomery
+Prof. Albus Dumbledore
+Mister Anderson
+Mx. Ray Smith
+Rev. J.W. West
+Sir Arthur Conan Doyle
+Countess Adelaide
+
+--- PHONE NUMBERS (Global & Messy) ---
++1-202-555-0102
+(202) 555-0196
+202 555 0196
++44 20 7946 0958
+0800-123-456
+123.456.7890 ext. 402
+911
+011-49-89-636-48018
+
+--- EMAILS (The Good, The Bad, & The Ugly) ---
+simple@example.com
+very.common@example.com
+disposable.style.email.with+symbol@example.com
+user.name+tag+sorting@example.com
+"very.unusual.@.unusual.com"@example.com
+invalid-email@example..com
+joe@127.0.0.1
+admin@internal-server
+
+--- URLS & WEBSITES ---
+https://www.google.com/search?q=regex+tips
+http://subdomain.example.org/page.php?id=10&user=true
+ftp://files.server.net/pub/data.zip
+www.just-the-web.com
+https://localhost:8080/dashboard
+https://site.me/path/to/resource#top-header
+
+--- DATES & TIMES ---
+2026-02-27
+27/02/2026
+02-27-26
+Feb 27, 2026
+14:30:05
+2:15 PM
+
+--- COMPLEX STRINGS ---
+ID_NUMBER: 99-XJ-4022 (Expires: 2030)
+Price: $1,240.99 [Discounted by 15%]
+Hex Color: #FF5733 or #abc
+IPv4: 192.168.1.1

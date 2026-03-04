@@ -43,19 +43,16 @@ namespace RegexPractice
             string fileLocation = Path.Combine(desktop, fileName);
 
             string trPhonePattern = @"\b?(?:\+|0)?\(?(?:\d{2,4})?\)?[ \.\-\#]?\d{3}[ \.\-\#]?\d{3}[ \.\-\#]?\d{2}[ \.\-\#]?\d{2}(?:\d{4})?\b";
-            Regex regex = new(trPhonePattern);
+            string toSearch = File.ReadAllText(fileLocation);
 
-            string[] toSearch = File.ReadAllLines(fileLocation);
+            MatchCollection matches = Regex.Matches(toSearch, trPhonePattern);
 
             List<string> validNumbers = [];
-
+            
             int invalidCount = 0;
-            foreach (var num in toSearch)
+            foreach (var match in matches)
             {
-                if (regex.IsMatch(num.Trim()))
-                    validNumbers.Add(num);
-                else
-                    invalidCount++;
+                validNumbers.Add(match.ToString());
             }
 
             Console.BackgroundColor = ConsoleColor.DarkRed;
@@ -71,6 +68,14 @@ namespace RegexPractice
             }
 
             stopwatch.Stop();
+
+            string input = "John Smith";
+
+            string result = Regex.Replace(
+                input,
+                @"(\w+)\s+(\w+)", "$2 : $1");
+
+            Console.WriteLine(result); 
 
             Console.WriteLine($"Milliseconds: {stopwatch.ElapsedMilliseconds}");
         }
