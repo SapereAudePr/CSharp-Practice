@@ -6,7 +6,28 @@
         xmlns:local="clr-namespace:WpfPractice"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid x:Name="grid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="1" Grid.Column="1" Content="TEST" />
+        <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="wqdqwgfqwgwqgwqgqwgqwgergerggergergerg" />
+
+        <Button Grid.Row="3" Grid.Column="1" Content="Click" Click="Button_Click" />
 
     </Grid>
 </Window>
