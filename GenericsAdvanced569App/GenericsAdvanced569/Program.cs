@@ -31,7 +31,7 @@ namespace GenericsAdvanced569
     public class Product
     {
         public int Id { get; set; }
-        public int Name { get; set; }
+        public string Name { get; set; }
     }
 
     public class ProductRepo : IRepository<Product>
