@@ -4,13 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Test<int> test = new();
-            test.Content = 1;
-            Console.WriteLine(test.Print());
-
-            Test<string> testStr = new();
-            testStr.Content = "Testing";
-            Console.WriteLine(testStr.Print());
+            Test<int, string> test = new(1, "String");
+            test.Display();
 
             Console.ReadKey();
         }

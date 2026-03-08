@@ -1,12 +1,19 @@
 ﻿namespace GenericsAdvancedPractice453
 {
-    internal class Test<T>
+    internal class Test<TFirst, TSecond>
     {
-        public T Content { get; set; }
+        public TFirst ValueOne { get; set; }
+        public TSecond ValueTwo { get; set; }
 
-        public string Print()
+        public Test(TFirst first, TSecond second)
         {
-            return $"{Content}";
+            ValueOne = first;
+            ValueTwo = second;
+        }
+
+        public void Display()
+        {
+            Console.WriteLine($"{ValueOne} | {ValueTwo}");
         }
     }
 }
