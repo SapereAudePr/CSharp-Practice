@@ -4,10 +4,16 @@
     {
         static void Main(string[] args)
         {
-            Test<int, string> test = new(1, "String");
-            test.Display();
+            Test<string> test = new();
+
+            Test<ClassTest> testClass = new();
 
             Console.ReadKey();
         }
+    }
+
+    public class ClassTest
+    {
+
     }
 }

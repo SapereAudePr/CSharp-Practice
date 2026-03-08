@@ -1,19 +1,7 @@
 ﻿namespace GenericsAdvancedPractice453
 {
-    internal class Test<TFirst, TSecond>
+    internal class Test<T> where T : class
     {
-        public TFirst ValueOne { get; set; }
-        public TSecond ValueTwo { get; set; }
-
-        public Test(TFirst first, TSecond second)
-        {
-            ValueOne = first;
-            ValueTwo = second;
-        }
-
-        public void Display()
-        {
-            Console.WriteLine($"{ValueOne} | {ValueTwo}");
-        }
+        
     }
 }
