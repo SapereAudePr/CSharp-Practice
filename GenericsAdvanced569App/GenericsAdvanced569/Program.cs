@@ -1,5 +1,4 @@
-﻿
-namespace GenericsAdvanced569
+﻿namespace GenericsAdvanced569
 {
     internal class Program
     {
@@ -13,15 +12,16 @@ namespace GenericsAdvanced569
             emploRepo.Add(employee);
 
             var firstProd = prodRepo.GetById(1);
-            Console.WriteLine($"{firstProd.Name} | {firstProd.Id}");
+            if (firstProd != null)
+            {
+                Console.WriteLine($"{firstProd.Name} | {firstProd.Id}");
+            }
 
             var firstEmployee = emploRepo.Find(x => x.Name.Equals("Alicia")).ToList();
-            if (firstEmployee != null)
+            if (!firstEmployee.Any()) return;
+            foreach (var item in firstEmployee)
             {
-                foreach (var item in firstEmployee)
-                {
-                    Console.WriteLine($"{item.Id} | {item.Name}");
-                }
+                Console.WriteLine($"{item.Id} | {item.Name}");
             }
 
             Console.ReadKey();
@@ -39,18 +39,9 @@ namespace GenericsAdvanced569
         private readonly List<T> items = new();
         public void Add(T entity) => items.Add(entity);
         public void Remove(T entity) => items.Remove(entity);
-        public IEnumerable<T> GetAll()
-        {
-            return items;
-        }
-        public T GetById(int Id)
-        {
-            return items.FirstOrDefault(x => x.Id.Equals(Id))!;
-        }
-        public IEnumerable<T> Find(Func<T, bool> predicate)
-        {
-            return items.Where(predicate);
-        }
+        public IEnumerable<T> GetAll() => items;
+        public T? GetById(int Id) => items.FirstOrDefault(x => x.Id.Equals(Id));
+        public IEnumerable<T> Find(Func<T, bool> predicate) => items.Where(predicate);
     }
 
     public interface IEntity
