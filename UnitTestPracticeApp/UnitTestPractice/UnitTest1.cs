@@ -39,5 +39,22 @@ namespace UnitTestPractice
             // Assert
             error.Should().BeOfType<OverBookingError>();
         }
+
+        [Theory]
+        [InlineData("testEmail", 5)]
+        [InlineData("testEmail2", 2)]
+        ///<summary>
+        /// When a passenger books a flight, passenger's email should be in the Bookings List
+        /// </summary>
+        public void Book_WhenPassengerBooksFlight_ShouldBeRemembered(string email, int bookedSeats)
+        {
+            var flight = new Flight(10);
+
+            var book = flight.Book(email, bookedSeats);
+
+            //flight.Bookings.Should().ContainSingle(p => p.Email == email);
+            flight.Bookings.Should().ContainEquivalentOf(new Passenger(email, bookedSeats));
+            book.Should().BeNull();
+        }
     }
 }
