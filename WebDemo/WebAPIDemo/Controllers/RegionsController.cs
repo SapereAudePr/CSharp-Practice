@@ -64,5 +64,30 @@ namespace WebAPIDemo.Controllers
 
             return Ok(regionDto);
         }
+
+        [HttpPost]
+        public IActionResult CreateRegion([FromBody] AddRegionRequestDto requestDto)
+        {
+            var regionDomainModel = new Region()
+            {
+                Code = requestDto.Code,
+                Name = requestDto.Name,
+                RegionImgUrl = requestDto.RegionImgUrl
+            };
+
+
+            _webDemoDbContext.Regions.Add(regionDomainModel);
+            _webDemoDbContext.SaveChanges();
+
+            var regionDto = new RegionDto()
+            {
+                Id = regionDomainModel.Id,
+                Code = regionDomainModel.Code,
+                Name = regionDomainModel.Name,
+                RegionImgUrl = regionDomainModel.RegionImgUrl
+            };
+
+            return CreatedAtAction(nameof(GetById), new { id = regionDto.Id }, regionDto);
+        }
     }
 }
