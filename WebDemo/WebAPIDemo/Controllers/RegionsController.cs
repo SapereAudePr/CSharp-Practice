@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebAPIDemo.Data;
 using WebAPIDemo.Models.Domain;
 using WebAPIDemo.Models.DTO;
@@ -8,7 +9,6 @@ namespace WebAPIDemo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //https://localhost:7234/api/regions
     public class RegionsController : ControllerBase
     {
         private readonly WebDemoDbContext _webDemoDbContext;
@@ -18,14 +18,10 @@ namespace WebAPIDemo.Controllers
             this._webDemoDbContext = webDemoDbContext;
         }
 
-        // URL GET: https://localhost:7234/api/regions
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var regions = _webDemoDbContext.Regions.ToList();
-
-            if (regions is null)
-                return NotFound();
+            var regions = await _webDemoDbContext.Regions.ToListAsync();
 
             var regionDto = new List<RegionDto>();
             foreach (var region in regions)
@@ -42,14 +38,11 @@ namespace WebAPIDemo.Controllers
             return Ok(regionDto);
         }
 
-        // URL GET: https://localhost:7234/api/regions/{id}
         [HttpGet("{id:Guid}")]
-        // Route parameter rule : {parameterName:constraint}
-        //[Route("{id:Guid}")]
-        public IActionResult GetById([FromRoute] Guid id)
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
-            var region = _webDemoDbContext.Regions.
-                FirstOrDefault(r => r.Id == (id));
+            var region = await _webDemoDbContext.Regions.
+                FirstOrDefaultAsync(r => r.Id == (id));
 
             if (region is null)
                 return NotFound();
@@ -66,7 +59,7 @@ namespace WebAPIDemo.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateRegion([FromBody] AddRegionRequestDto requestDto)
+        public async Task<IActionResult> CreateRegion([FromBody] AddRegionRequestDto requestDto)
         {
             var regionDomainModel = new Region()
             {
@@ -76,8 +69,8 @@ namespace WebAPIDemo.Controllers
             };
 
 
-            _webDemoDbContext.Regions.Add(regionDomainModel);
-            _webDemoDbContext.SaveChanges();
+            await _webDemoDbContext.Regions.AddAsync(regionDomainModel);
+            await _webDemoDbContext.SaveChangesAsync();
 
             var regionDto = new RegionDto()
             {
@@ -90,11 +83,10 @@ namespace WebAPIDemo.Controllers
             return CreatedAtAction(nameof(GetById), new { id = regionDto.Id }, regionDto);
         }
 
-
         [HttpPut("{id:Guid}")]
-        public IActionResult UpdateRegion([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto requestDto)
+        public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto requestDto)
         {
-            var regionDomainModel = _webDemoDbContext.Regions.FirstOrDefault(r => r.Id == id);
+            var regionDomainModel = await _webDemoDbContext.Regions.FirstOrDefaultAsync(r => r.Id == id);
 
             if (regionDomainModel is null)
                 return NotFound();
@@ -103,7 +95,29 @@ namespace WebAPIDemo.Controllers
             regionDomainModel.Name = requestDto.Name;
             regionDomainModel.RegionImgUrl = requestDto.RegionImgUrl;
 
-            _webDemoDbContext.SaveChanges();
+            await _webDemoDbContext.SaveChangesAsync();
+
+            var regionDto = new RegionDto()
+            {
+                Id = regionDomainModel.Id,
+                Code = regionDomainModel.Code,
+                Name = regionDomainModel.Name,
+                RegionImgUrl = regionDomainModel.RegionImgUrl
+            };
+
+            return Ok(regionDto);
+        }
+
+        [HttpDelete("{id:Guid}")]
+        public async Task<IActionResult> DeleteRegion([FromRoute] Guid id)
+        {
+            var regionDomainModel = await _webDemoDbContext.Regions.FirstOrDefaultAsync(r => r.Id == id);
+
+            if (regionDomainModel is null)
+                return NotFound();
+
+            _webDemoDbContext.Regions.Remove(regionDomainModel);
+            await _webDemoDbContext.SaveChangesAsync();
 
             var regionDto = new RegionDto()
             {
