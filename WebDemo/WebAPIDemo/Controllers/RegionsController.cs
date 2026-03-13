@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPIDemo.Data;
 using WebAPIDemo.Models.Domain;
 using WebAPIDemo.Models.DTO;
+using WebAPIDemo.Repositories;
 
 namespace WebAPIDemo.Controllers
 {
@@ -12,16 +12,18 @@ namespace WebAPIDemo.Controllers
     public class RegionsController : ControllerBase
     {
         private readonly WebDemoDbContext _webDemoDbContext;
+        private readonly IRegionRepository _regionRepository;
 
-        public RegionsController(WebDemoDbContext webDemoDbContext)
+        public RegionsController(WebDemoDbContext webDemoDbContext, IRegionRepository regionRepository)
         {
             this._webDemoDbContext = webDemoDbContext;
+            this._regionRepository = regionRepository;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var regions = await _webDemoDbContext.Regions.ToListAsync();
+            var regions = await _regionRepository.GetAllAsync();
 
             var regionDto = new List<RegionDto>();
             foreach (var region in regions)
