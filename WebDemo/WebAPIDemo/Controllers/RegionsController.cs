@@ -89,5 +89,31 @@ namespace WebAPIDemo.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = regionDto.Id }, regionDto);
         }
+
+
+        [HttpPut("{id:Guid}")]
+        public IActionResult UpdateRegion([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto requestDto)
+        {
+            var regionDomainModel = _webDemoDbContext.Regions.FirstOrDefault(r => r.Id == id);
+
+            if (regionDomainModel is null)
+                return NotFound();
+
+            regionDomainModel.Code = requestDto.Code;
+            regionDomainModel.Name = requestDto.Name;
+            regionDomainModel.RegionImgUrl = requestDto.RegionImgUrl;
+
+            _webDemoDbContext.SaveChanges();
+
+            var regionDto = new RegionDto()
+            {
+                Id = regionDomainModel.Id,
+                Code = regionDomainModel.Code,
+                Name = regionDomainModel.Name,
+                RegionImgUrl = regionDomainModel.RegionImgUrl
+            };
+
+            return Ok(regionDto);
+        }
     }
 }
