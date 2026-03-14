@@ -10,7 +10,11 @@ namespace WebAPIDemo.Mappings
         {
             CreateMap<Region, RegionDto>().ReverseMap();
             CreateMap<Region, AddRegionRequestDto>().ReverseMap(); 
-            CreateMap<Region, UpdateRegionRequestDto>().ReverseMap(); 
+            CreateMap<Region, UpdateRegionRequestDto>().ReverseMap();
+            CreateMap<AddWalkRequestDto, Walk>().ReverseMap();
+            CreateMap<WalkDto, Walk>().ReverseMap();
+            CreateMap<Difficulty, DifficultyDto>().ReverseMap();
+            CreateMap<UpdateWalkRequestDto, Walk>().ReverseMap();
         }
     }
 }

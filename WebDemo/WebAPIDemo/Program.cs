@@ -23,6 +23,8 @@ namespace WebAPIDemo
 
             builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();
 
+            builder.Services.AddScoped<IWalkRepository, SQLWalkRepository>();
+
             builder.Services.AddAutoMapper(cfg => { },
                 Assembly.GetExecutingAssembly());
 
