@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using WebAPIDemo.Data;
-using WebAPIDemo.Mappings;
 using WebAPIDemo.Repositories;
 
 namespace WebAPIDemo
