@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebAPIDemo.CustomActionFilters;
 using WebAPIDemo.Data;
 using WebAPIDemo.Models.Domain;
 using WebAPIDemo.Models.DTO;
@@ -44,6 +45,7 @@ namespace WebAPIDemo.Controllers
         }
 
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddWalkRequestDto requestDto)
         {
             var walkDomainModel = _mapper.Map<Walk>(requestDto);
@@ -56,6 +58,7 @@ namespace WebAPIDemo.Controllers
         }
 
         [HttpPut("{id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> Update([FromBody] UpdateWalkRequestDto requestDto, [FromRoute] Guid id)
         {
             var walkDomainModel = _mapper.Map<Walk>(requestDto);

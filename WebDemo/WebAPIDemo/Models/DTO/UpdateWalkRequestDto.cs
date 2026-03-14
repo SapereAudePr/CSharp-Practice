@@ -1,12 +1,21 @@
-﻿namespace WebAPIDemo.Models.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebAPIDemo.Models.DTO
 {
     public class UpdateWalkRequestDto
     {
+        [Required]
+        [MaxLength(100, ErrorMessage = "Name can be only made of 100 characters")]
         public string Name { get; set; }
+        [Required]
+        [MaxLength(1000, ErrorMessage = "Description can be only made of 1000 characters")]
         public string Description { get; set; }
+        [Required]
         public double LengthInKm { get; set; }
         public string? WalkImgUrl { get; set; }
+        [Required]
         public Guid DifficultyId { get; set; }
+        [Required]
         public Guid RegionId { get; set; }
     }
 }

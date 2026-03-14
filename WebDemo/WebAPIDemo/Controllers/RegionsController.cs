@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using WebAPIDemo.CustomActionFilters;
 using WebAPIDemo.Models.Domain;
 using WebAPIDemo.Models.DTO;
 using WebAPIDemo.Repositories;
@@ -39,6 +40,7 @@ namespace WebAPIDemo.Controllers
         }
 
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> CreateRegion([FromBody] AddRegionRequestDto requestDto)
         {
             var regionDomainModel = _mapper.Map<Region>(requestDto);
@@ -51,6 +53,7 @@ namespace WebAPIDemo.Controllers
         }
 
         [HttpPut("{id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto requestDto)
         {
             var regionDomainModel = _mapper.Map<Region>(requestDto);
