@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebAPIDemo.Data;
 using WebAPIDemo.Models.Domain;
 using WebAPIDemo.Models.DTO;
 using WebAPIDemo.Repositories;
