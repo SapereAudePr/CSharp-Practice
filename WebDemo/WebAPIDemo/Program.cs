@@ -1,6 +1,8 @@
 
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using WebAPIDemo.Data;
+using WebAPIDemo.Mappings;
 using WebAPIDemo.Repositories;
 
 namespace WebAPIDemo
@@ -21,6 +23,9 @@ namespace WebAPIDemo
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebDemoConnectionString")));
 
             builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();
+
+            builder.Services.AddAutoMapper(cfg => { },
+                Assembly.GetExecutingAssembly());
 
             var app = builder.Build();
 
