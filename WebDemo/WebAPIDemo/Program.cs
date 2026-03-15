@@ -1,8 +1,12 @@
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using WebAPIDemo.Data;
 using WebAPIDemo.Repositories;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebAPIDemo
 {
@@ -21,12 +25,44 @@ namespace WebAPIDemo
             builder.Services.AddDbContext<WebDemoDbContext>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebDemoConnectionString")));
 
+            builder.Services.AddDbContext<WebDemoAuthDbContext>(
+                options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebDemoAuthConnectionString")));
+
             builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();
 
             builder.Services.AddScoped<IWalkRepository, SQLWalkRepository>();
 
             builder.Services.AddAutoMapper(cfg => { },
                 Assembly.GetExecutingAssembly());
+
+            builder.Services.AddIdentityCore<IdentityUser>()
+                .AddRoles<IdentityRole>()
+                .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("WebApiDemo")
+                .AddEntityFrameworkStores<WebDemoAuthDbContext>()
+                .AddDefaultTokenProviders();
+
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+            });
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                });
 
             var app = builder.Build();
 
@@ -38,6 +74,8 @@ namespace WebAPIDemo
             }
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

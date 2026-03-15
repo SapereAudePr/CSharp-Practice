@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPIDemo.CustomActionFilters;
 using WebAPIDemo.Models.Domain;
@@ -9,6 +10,7 @@ namespace WebAPIDemo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class WalksController : ControllerBase
     {
         private readonly IWalkRepository _walkRepository;
@@ -19,8 +21,7 @@ namespace WebAPIDemo.Controllers
             this._walkRepository = walkRepository;
             this._mapper = mapper;
         }
-
-        // GET: api/walks=filterOn=Name&filterQuery=Track
+        // GET: api/walks?filterOn=Name&filterQuery=Track&sortBy=Name&isAscending=false&pageNumber=1&pageSize=1000
         [HttpGet] 
         public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery, 
             [FromQuery] string? sortBy, [FromQuery] bool isAscending = false,
