@@ -21,10 +21,10 @@ namespace WebAPIDemo.Controllers
         }
 
         // GET: api/walks=filterOn=Name&filterQuery=Track
-        [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery)
+        [HttpGet] 
+        public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery, [FromQuery] string? sortBy, [FromQuery] bool isAscending = false)
         {
-            var walkDomainModel = await _walkRepository.GetAllAsync(filterOn, filterQuery);
+            var walkDomainModel = await _walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending);
 
             return Ok(_mapper.Map<List<WalkDto>>(walkDomainModel));
         }

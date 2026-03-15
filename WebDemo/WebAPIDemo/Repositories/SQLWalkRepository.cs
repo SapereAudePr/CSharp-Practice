@@ -12,7 +12,11 @@ namespace WebAPIDemo.Repositories
         {
             this._webDemoDbContext = webDemoDbContext;
         }
-        public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null)
+        public async Task<List<Walk>> GetAllAsync(
+            string? filterOn = null, 
+            string? filterQuery = null, 
+            string? sortBy = null, 
+            bool isAscending = false)
         {
             var walks = _webDemoDbContext.Walks.Include(x => x.Difficulty).Include(x => x.Region).AsQueryable();
 
@@ -23,18 +27,33 @@ namespace WebAPIDemo.Repositories
                 switch (filterOn)
                 {
                     case "Name":
-                        walks = walks.Where(x => x.Name.ToLower().Contains(filterQuery));
+                        walks = walks.Where(x => x.Name.Contains(filterQuery));
                         break;
 
                     case "Description":
-                        walks = walks.Where(x => x.Description.ToLower().Contains(filterQuery));
+                        walks = walks.Where(x => x.Description.Contains(filterQuery));
                         break;
 
                     case "LengthInKm":
                         if (double.TryParse(filterQuery, out var length))
-                        {
                             walks = walks.Where(x => x.LengthInKm == length);
-                        }
+                        break;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                switch (sortBy)
+                {
+                    case "Name":
+                        walks = walks = isAscending ?
+                            walks.OrderBy(x => x.Name) :
+                            walks.OrderByDescending(x => x.Name);
+                        break;
+                    case "LengthInKm":
+                        walks = walks = isAscending ?
+                        walks.OrderBy(x => x.LengthInKm) :
+                        walks.OrderByDescending(x => x.LengthInKm);
                         break;
                 }
             }
