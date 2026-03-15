@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WebAPIDemo.CustomActionFilters;
-using WebAPIDemo.Data;
 using WebAPIDemo.Models.Domain;
 using WebAPIDemo.Models.DTO;
 using WebAPIDemo.Repositories;
@@ -23,11 +20,11 @@ namespace WebAPIDemo.Controllers
             this._mapper = mapper;
         }
 
-        // GET: api/walks
+        // GET: api/walks=filterOn=Name&filterQuery=Track
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery)
         {
-            var walkDomainModel = await _walkRepository.GetAllAsync();
+            var walkDomainModel = await _walkRepository.GetAllAsync(filterOn, filterQuery);
 
             return Ok(_mapper.Map<List<WalkDto>>(walkDomainModel));
         }

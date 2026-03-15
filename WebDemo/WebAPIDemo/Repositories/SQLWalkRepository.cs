@@ -12,10 +12,34 @@ namespace WebAPIDemo.Repositories
         {
             this._webDemoDbContext = webDemoDbContext;
         }
-
-        public async Task<List<Walk>> GetAllAsync()
+        public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null)
         {
-            return await _webDemoDbContext.Walks.Include("Difficulty").Include("Region").ToListAsync();
+            var walks = _webDemoDbContext.Walks.Include(x => x.Difficulty).Include(x => x.Region).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filterOn) && !string.IsNullOrWhiteSpace(filterQuery))
+            {
+                filterQuery = filterQuery.ToLower();
+
+                switch (filterOn)
+                {
+                    case "Name":
+                        walks = walks.Where(x => x.Name.ToLower().Contains(filterQuery));
+                        break;
+
+                    case "Description":
+                        walks = walks.Where(x => x.Description.ToLower().Contains(filterQuery));
+                        break;
+
+                    case "LengthInKm":
+                        if (double.TryParse(filterQuery, out var length))
+                        {
+                            walks = walks.Where(x => x.LengthInKm == length);
+                        }
+                        break;
+                }
+            }
+
+            return await walks.ToListAsync();
         }
 
         public async Task<Walk?> GetByIdAsync(Guid id)
