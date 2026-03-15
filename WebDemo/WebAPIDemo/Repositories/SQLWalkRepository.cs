@@ -16,14 +16,15 @@ namespace WebAPIDemo.Repositories
             string? filterOn = null, 
             string? filterQuery = null, 
             string? sortBy = null, 
-            bool isAscending = false)
+            bool isAscending = false,
+            int pageNumber = 1,
+            int pageSize = 1000)
         {
             var walks = _webDemoDbContext.Walks.Include(x => x.Difficulty).Include(x => x.Region).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(filterOn) && !string.IsNullOrWhiteSpace(filterQuery))
             {
                 filterQuery = filterQuery.ToLower();
-
                 switch (filterOn)
                 {
                     case "Name":
@@ -58,7 +59,9 @@ namespace WebAPIDemo.Repositories
                 }
             }
 
-            return await walks.ToListAsync();
+            var skipResults = (pageNumber - 1) * pageSize;
+
+            return await walks.Skip(skipResults).Take(pageSize).ToListAsync();
         }
 
         public async Task<Walk?> GetByIdAsync(Guid id)
