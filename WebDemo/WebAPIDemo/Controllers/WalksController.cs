@@ -23,6 +23,7 @@ namespace WebAPIDemo.Controllers
             this._mapper = mapper;
         }
 
+        // GET: api/walks
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
