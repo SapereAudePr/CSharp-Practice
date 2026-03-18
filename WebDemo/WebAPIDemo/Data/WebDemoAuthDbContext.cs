@@ -33,7 +33,7 @@ namespace WebAPIDemo.Data
                     Id = writerRoleId,
                     ConcurrencyStamp = writerRoleId,
                     Name = "Writer",
-                    NormalizedName = "writer".ToUpper()
+                    NormalizedName = "Writer".ToUpper()
                 }
             };
 
