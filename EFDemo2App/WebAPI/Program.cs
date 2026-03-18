@@ -1,5 +1,6 @@
 using EFDemo.Data.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace WebAPI;
 
@@ -20,6 +21,18 @@ public class Program
         options.UseSqlServer(
             builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Data"))
         );
+
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        string folderPath = Path.Combine(desktopPath, "Logs");
+        string filePath = Path.Combine(folderPath, "Logs.txt");
+
+        builder.Host.UseSerilog((context, config) =>
+        {
+            config
+            .MinimumLevel.Information()
+            .WriteTo.Console()
+            .WriteTo.File(filePath, rollingInterval: RollingInterval.Day);
+        });
 
         var app = builder.Build();
 
