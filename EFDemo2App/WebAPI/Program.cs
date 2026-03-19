@@ -1,5 +1,8 @@
 using EFDemo.Data.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Repositories_.IRepositories;
+using Repositories_.Repositories;
 using Serilog;
 
 namespace WebAPI;
@@ -33,6 +36,8 @@ public class Program
             .WriteTo.Console()
             .WriteTo.File(filePath, rollingInterval: RollingInterval.Day);
         });
+
+        builder.Services.AddScoped<ICountry, SQLCountryRepository>();
 
         var app = builder.Build();
 
