@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repositories_.IRepositories
 {
-    public interface ICountry
+    public interface ICountryRepository
     {
         Task<List<Country>> GetAll(string? filterOn, string? filterBy, string? sortOn, bool orderByAscending = false, int pageNumber = 1, int pageSize = 10);
         Task<Country?> GetById(int id);

@@ -37,7 +37,7 @@ public class Program
             .WriteTo.File(filePath, rollingInterval: RollingInterval.Day);
         });
 
-        builder.Services.AddScoped<ICountry, SQLCountryRepository>();
+        builder.Services.AddScoped<ICountryRepository, SQLCountryRepository>();
 
         var app = builder.Build();
 

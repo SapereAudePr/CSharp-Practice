@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Repositories_.Repositories;
 
-public class SQLCountryRepository : ICountry
+public class SQLCountryRepository : ICountryRepository
 {
     private readonly RestaurantDbContext dbContext;
 
@@ -23,26 +23,33 @@ public class SQLCountryRepository : ICountry
         string? sortOn, bool orderByAscending = false,
         int pageNumber = 1, int pageSize = 10)
     {
-        var country = dbContext.Countries.AsQueryable();
+        var query = dbContext.Countries.AsQueryable();
 
         if (!string.IsNullOrEmpty(filterOn) && !string.IsNullOrEmpty(filterBy))
         {
             if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
             {
-                country = country.Where(x => x.Name.Contains(filterBy));
+                query = query.Where(x => x.Name.Contains(filterBy));
             }
         }
 
         if (!string.IsNullOrEmpty(sortOn))
         {
-            country = orderByAscending ?
-               country.OrderBy(x => x.Name) :
-               country.OrderByDescending(x => x.Name);
+            if (sortOn.Equals("Name"))
+            {
+                query = orderByAscending ?
+               query.OrderBy(x => x.Name) :
+               query.OrderByDescending(x => x.Name);
+            }
+        }
+        else
+        {
+            query = query.OrderBy(x => x.Id);
         }
 
         var skipResults = (pageNumber - 1) * pageSize;
 
-        return await country.Skip(skipResults).Take(pageSize).ToListAsync();
+        return await query.Skip(skipResults).Take(pageSize).ToListAsync();
     }
 
     public async Task<Country?> GetById(int id) => await dbContext.Countries.FindAsync(id);
