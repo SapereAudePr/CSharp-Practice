@@ -13,6 +13,6 @@ namespace Repositories_.IRepositories
         Task<Country?> GetById(int id);
         Task<Country> Create(Country country);
         Task<Country?> Update(Country country, int id);
-        Task<Country> Delete(int id);
+        Task<Country?> Delete(int id);
     }
 }

@@ -75,13 +75,14 @@ public class SQLCountryRepository : ICountryRepository
         return domainModel;
     }
 
-    public async Task<Country> Delete(int id)
+    public async Task<Country?> Delete(int id)
     {
         var model = await dbContext.Countries.FindAsync(id);
-        if (model is not null)
-        {
-            dbContext.Countries.Remove(model);
-        }
+        if (model is null)
+            return null;
+
+        dbContext.Countries.Remove(model);
+        await dbContext.SaveChangesAsync();
 
         return model;
     }

@@ -79,5 +79,41 @@ namespace WebAPI.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = domainModel.Id }, countryDto);
         }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] CountryUpdateRequestDto requestDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var domainModel = requestDto.ToCountryFromUpdate();
+
+            domainModel = await _countryRepository.Update(domainModel, id);
+
+            if (domainModel is null)
+            {
+                return Problem(
+                    detail: $"Could not update. No Country found with id: {id}",
+                    statusCode: StatusCodes.Status404NotFound,
+                    title: "Update Failed!");
+            }
+
+            return Ok(domainModel.ToDto());
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            var domainModel = await _countryRepository.Delete(id);
+            if (domainModel is null)
+            {
+                return Problem(
+                    detail: $"Could not delete. No Country found with id: {id}",
+                    statusCode: StatusCodes.Status404NotFound,
+                    title: "Delete Failed!");
+            }
+
+            return NoContent();
+        }
     }
 }

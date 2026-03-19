@@ -27,4 +27,12 @@ public static class CountryMap
             CreationTime = country.CreationTime
         };
     }
+
+    public static Country ToCountryFromUpdate(this CountryUpdateRequestDto requestDto)
+    {
+        return new Country()
+        {
+            Name = requestDto.Name
+        };
+    }
 }
