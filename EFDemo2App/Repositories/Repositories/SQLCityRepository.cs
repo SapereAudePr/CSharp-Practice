@@ -35,10 +35,14 @@ public class SQLCityRepository : ICityRepository
             {
                 query = isAscending ? query.OrderBy(x => x.Name) : query.OrderByDescending(x => x.Name);
             }
+            if (sortOn.Equals("CountryId"))
+            {
+                query = isAscending ? query.OrderBy(x => x.CountryId) : query.OrderByDescending(x => x.CountryId);
+            }
         }
         else
         {
-            query = query.OrderBy(x => x.Id);
+            query = query.OrderByDescending(x => x.Id);
         }
 
         var skipped = (pageNumber - 1) * pageSize;

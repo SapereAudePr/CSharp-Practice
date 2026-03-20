@@ -38,6 +38,7 @@ public class Program
         });
 
         builder.Services.AddScoped<ICountryRepository, SQLCountryRepository>();
+        builder.Services.AddScoped<ICityRepository, SQLCityRepository>();
 
         var app = builder.Build();
 
