@@ -14,8 +14,10 @@ public static class CityMap
     {
         return new CityDto()
         {
+            Id = city.Id,
             Name = city.Name,
-            CountryId = city.CountryId
+            CountryId = city.CountryId,
+            CreationTime = city.CreationTime
         };
     }
 
@@ -25,6 +27,24 @@ public static class CityMap
         {
             Name = cityDto.Name,
             CountryId = cityDto.CountryId
+        };
+    }
+
+    public static City DtoToDomain(this CityCreateRequestDto requestDto)
+    {
+        return new City()
+        {
+            Name = requestDto.Name,
+            CountryId = requestDto.CountryId
+        };
+    }
+
+    public static City DtoToDomain(this CityUpdateRequestDto requestDto)
+    {
+        return new City()
+        {
+            Name = requestDto.Name,
+            CountryId = requestDto.CountryId
         };
     }
 }

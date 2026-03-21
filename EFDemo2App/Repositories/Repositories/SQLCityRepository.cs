@@ -42,7 +42,7 @@ public class SQLCityRepository : ICityRepository
         }
         else
         {
-            query = query.OrderByDescending(x => x.Id);
+            query = query.OrderBy(x => x.Id);
         }
 
         var skipped = (pageNumber - 1) * pageSize;

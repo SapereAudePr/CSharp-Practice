@@ -1,4 +1,5 @@
 ﻿using Domain.Mappings;
+using Domain.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Repositories_.IRepositories;
 
@@ -43,7 +44,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var domainModel = await cityRepository.GetById(id);
             if (domainModel is null)
@@ -54,6 +55,57 @@ namespace WebAPI.Controllers
                     title: "Find Failed!");
 
             return Ok(domainModel.ToDto());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CityCreateRequestDto requestDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var requestModel = requestDto.DtoToDomain();
+            if (requestModel is null)
+                return Problem(
+                    detail: "Fields can not be null!",
+                    statusCode: StatusCodes.Status400BadRequest,
+                    title: "Create City Failed!"
+                    );
+
+            var createdDomain = await cityRepository.Create(requestModel);
+
+            return CreatedAtAction(nameof(GetById), new { id = createdDomain.Id }, createdDomain.ToDto());
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] CityUpdateRequestDto requestDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var requestModel = requestDto.DtoToDomain();
+
+            var updatedModel = await cityRepository.Update(id, requestModel);
+            if (updatedModel is null)
+                return Problem(
+                    detail: $"City with id: {id} not found",
+                    statusCode: StatusCodes.Status404NotFound,
+                    title: "Update City Failed");
+
+            return Ok(updatedModel.ToDto());
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            var domainModel = await cityRepository.Delete(id);
+            if (domainModel is null)
+                return Problem(
+                    detail: $"City with id: {id} not found",
+                    statusCode: StatusCodes.Status404NotFound,
+                    title: "Delete Failed"
+                    );
+
+            return NoContent();
         }
     }
 }
