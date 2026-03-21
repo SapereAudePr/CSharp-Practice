@@ -39,6 +39,7 @@ public class Program
 
         builder.Services.AddScoped<ICountryRepository, SQLCountryRepository>();
         builder.Services.AddScoped<ICityRepository, SQLCityRepository>();
+        builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();
 
         var app = builder.Build();
 
