@@ -40,6 +40,7 @@ public class Program
         builder.Services.AddScoped<ICountryRepository, SQLCountryRepository>();
         builder.Services.AddScoped<ICityRepository, SQLCityRepository>();
         builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();
+        builder.Services.AddScoped<IRestaurantRepository, SQLRestaurantRepository>();
 
         var app = builder.Build();
 
