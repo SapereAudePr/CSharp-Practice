@@ -22,7 +22,12 @@ public static class RestaurantMap
             EndShiftTime = restaurant.EndShiftTime,
             BuiltDate = restaurant.BuiltDate,
             CreationTime = restaurant.CreationTime,
-            RegionId = restaurant.RegionId
+            RegionId = restaurant.RegionId,
+            RegionName = restaurant.Region.Name,
+            CityId = restaurant.Region.CityId,
+            CityName = restaurant.Region.City.Name,
+            CountryId = restaurant.Region.City.CountryId,
+            CountryName = restaurant.Region.City.Country.Name
         };
     }
 
@@ -38,7 +43,7 @@ public static class RestaurantMap
             EndShiftTime = restaurantDto.EndShiftTime,
             BuiltDate = restaurantDto.BuiltDate,
             CreationTime = restaurantDto.CreationTime,
-            RegionId = restaurantDto.RegionId
+            RegionId = restaurantDto.RegionId,
         };
     }
 

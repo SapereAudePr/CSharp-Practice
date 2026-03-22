@@ -19,7 +19,11 @@ public class SQLRestaurantRepository : IRestaurantRepository
         string? sortOn, bool isAscending = false,
         int pageNumber = 1, int pageSize = 10)
     {
-        var models = dbContext.Restaurants.Include(x => x.Region).AsQueryable();
+        var models = dbContext.Restaurants
+            .Include(x => x.Region)
+            .ThenInclude(x => x.City)
+            .ThenInclude(x => x.Country)
+            .AsQueryable();
 
         if (!string.IsNullOrEmpty(filterOn) && !string.IsNullOrEmpty(filterBy))
         {
@@ -72,6 +76,8 @@ public class SQLRestaurantRepository : IRestaurantRepository
     {
         var domainModel = await dbContext.Restaurants
             .Include(x => x.Region)
+            .ThenInclude(x => x.City)
+            .ThenInclude(x => x.Country)
             .FirstOrDefaultAsync(x => x.Id == id);
         if (domainModel is null)
             return null;
