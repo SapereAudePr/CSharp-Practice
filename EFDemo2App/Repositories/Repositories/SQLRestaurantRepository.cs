@@ -90,7 +90,11 @@ public class SQLRestaurantRepository : IRestaurantRepository
         await dbContext.AddAsync(restaurant);
         await dbContext.SaveChangesAsync();
 
-        return restaurant;
+        return await dbContext.Restaurants
+            .Include(x => x.Region)
+            .ThenInclude(x => x.City)
+            .ThenInclude(x => x.Country)
+            .FirstAsync(x => x.Id == restaurant.Id);
     }
 
     public async Task<Restaurant?> Update(int id, Restaurant restaurant)

@@ -53,11 +53,7 @@ namespace WebAPI.Controllers
             var requestDomain = requestDto.RequestToDomain();
             var domainModel = await restaurantRepository.Create(requestDomain);
 
-            var createdDomain = await restaurantRepository.GetById(domainModel.Id);
-            if (createdDomain is null)
-                return NotFound();
-
-            return CreatedAtAction(nameof(GetById), new { id = createdDomain.Id }, createdDomain.ToDto());
+            return CreatedAtAction(nameof(GetById), new { id = domainModel.Id }, domainModel.ToDto());
         }
 
         [HttpPut("{id:int}")]
