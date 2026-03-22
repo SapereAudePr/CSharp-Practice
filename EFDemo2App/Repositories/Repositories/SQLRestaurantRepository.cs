@@ -81,22 +81,10 @@ public class SQLRestaurantRepository : IRestaurantRepository
 
     public async Task<Restaurant> Create(Restaurant restaurant)
     {
-        var domainModel = new Restaurant()
-        {
-            Name = restaurant.Name,
-            Capacity = restaurant.Capacity,
-            ReviewPoint = restaurant.ReviewPoint,
-            StartShiftTime = restaurant.StartShiftTime,
-            EndShiftTime = restaurant.EndShiftTime,
-            BuiltDate = restaurant.BuiltDate,
-            RegionId = restaurant.RegionId,
-            CreationTime = restaurant.CreationTime
-        };
-
-        await dbContext.AddAsync(domainModel);
+        await dbContext.AddAsync(restaurant);
         await dbContext.SaveChangesAsync();
 
-        return domainModel;
+        return restaurant;
     }
 
     public async Task<Restaurant?> Update(int id, Restaurant restaurant)
