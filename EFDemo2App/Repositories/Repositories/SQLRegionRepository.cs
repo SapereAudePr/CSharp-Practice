@@ -11,7 +11,6 @@ public class SQLRegionRepository : IRegionRepository
 
     public SQLRegionRepository(RestaurantDbContext dbContext)
     {
-        this.regionRepository = regionRepository;
         this.dbContext = dbContext;
     }
 
