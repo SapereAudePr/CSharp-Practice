@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 
 namespace Console;
 
@@ -120,48 +119,96 @@ internal class Program
         //    .ToListAsync();
 
 
-        var asList = await db.Employees.AsNoTracking().Include(x => x.Person).ToListAsync();
+        //var asList = await db.Employees.AsNoTracking().Include(x => x.Person).ToListAsync();
 
-        asList = asList.Where(x => x.PersonId == 1).ToList();
+        //asList = asList.Where(x => x.PersonId == 1).ToList();
 
-        foreach (var item in asList)
-        {
-            System.Console.WriteLine($"{item.Person.Name} - {item.PersonId}");
-        }
-
-
-        var asQueryable = db.Employees.AsNoTracking().Select(x => new { x.Person.Name, x.PersonId }).AsQueryable();
-
-        asQueryable = asQueryable.Where(x => x.PersonId == 1);
-
-        foreach (var item in asQueryable)
-        {
-            System.Console.WriteLine($"{item.Name} - {item.PersonId}");
-        }
-
-        var stringResult = await db.Employees
-            .AsNoTracking()
-            .Where(x => x.PersonId == 1)
-            .Select(x => new { x.Person.Name, x.PersonId })
-            .ToListAsync();
-
-        foreach (var item in stringResult)
-        {
-            System.Console.WriteLine($"{item.Name} - {item.PersonId}");
-        }
+        //foreach (var item in asList)
+        //{
+        //    System.Console.WriteLine($"{item.Person.Name} - {item.PersonId}");
+        //}
 
 
-        var test = await db.Employees
-            .AsNoTracking()
-            .Where(x => x.PersonId == 1)
-            //.Select(x => new {x.Person.Name, x.PersonId, x.Role})
-            .Select(x => x)
-            .ToListAsync();
+        //var asQueryable = db.Employees.AsNoTracking().Select(x => new { x.Person.Name, x.PersonId }).AsQueryable();
 
-        foreach (var item in test)
-        {
-            System.Console.WriteLine($"{item.Person.Name} - {item.PersonId} - {item.Role}");
-        }
+        //asQueryable = asQueryable.Where(x => x.PersonId == 1);
+
+        //foreach (var item in asQueryable)
+        //{
+        //    System.Console.WriteLine($"{item.Name} - {item.PersonId}");
+        //}
+
+        //var stringResult = await db.Employees
+        //    .AsNoTracking()
+        //    .Where(x => x.PersonId == 1)
+        //    .Select(x => new { x.Person.Name, x.PersonId })
+        //    .ToListAsync();
+
+        //foreach (var item in stringResult)
+        //{
+        //    System.Console.WriteLine($"{item.Name} - {item.PersonId}");
+        //}
+
+
+        //var test = await db.Employees
+        //    .AsNoTracking()
+        //    .Where(x => x.PersonId == 1)
+        //    .Select(x => new {x.Person.Name, x.PersonId, x.Role})
+        //    .ToListAsync();
+
+        //foreach (var item in test)
+        //{
+        //    System.Console.WriteLine($"{item.Name} - {item.PersonId} - {item.Role}");
+        //}
+
+
+
+        //var personOne = new Person()
+        //{
+        //    Name = "TestName3",
+        //    LastName = "TestLastName3"
+        //};
+
+        //var personTwo = new Person()
+        //{
+        //    Name = "TestName4",
+        //    LastName = "TestLastName4"
+        //};
+
+        //var personList = new List<Person>()
+        //{
+        //    personOne,
+        //    personTwo
+        //};
+
+        //foreach (var person in personList)
+        //{
+        //    await db.Persons.AddAsync(person);
+        //}
+
+        //System.Console.WriteLine(db.ChangeTracker.DebugView.LongView);
+        //await db.SaveChangesAsync();
+        //System.Console.WriteLine(db.ChangeTracker.DebugView.LongView);
+
+        //await db.Persons.AddRangeAsync(personList);
+        //await db.SaveChangesAsync();
+        //System.Console.WriteLine(db.ChangeTracker.DebugView.LongView);
+
+
+        //await db.Employees.FirstOrDefaultAsync(x => x.Id == 1);
+        //var test = await db.Employees.Where(x => x.Id == 1);
+        var test2 = await db.Persons
+            .Where(x => x.Id == 1)
+            .ExecuteUpdateAsync(x => x
+            .SetProperty(x => x.Name, "Asx")
+            .SetProperty(x => x.LastName, "Nyx"));
+
+        System.Console.WriteLine(test2);
+
+        //if (test is null)
+        //    return;
+
+        //System.Console.WriteLine(test.PersonId);
 
         System.Console.ReadKey();
     }
