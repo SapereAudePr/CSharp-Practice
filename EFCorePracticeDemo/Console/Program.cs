@@ -1,7 +1,5 @@
-﻿using Domain.Entities;
-using Infrastructure;
+﻿using Infrastructure;
 using Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -197,18 +195,20 @@ internal class Program
 
         //await db.Employees.FirstOrDefaultAsync(x => x.Id == 1);
         //var test = await db.Employees.Where(x => x.Id == 1);
-        var test2 = await db.Persons
-            .Where(x => x.Id == 1)
-            .ExecuteUpdateAsync(x => x
-            .SetProperty(x => x.Name, "Asx")
-            .SetProperty(x => x.LastName, "Nyx"));
+        //var test2 = await db.Persons
+        //    .Where(x => x.Id == 1)
+        //    .ExecuteUpdateAsync(x => x
+        //    .SetProperty(x => x.Name, "Asx")
+        //    .SetProperty(x => x.LastName, "Nyx"));
 
-        System.Console.WriteLine(test2);
+        //System.Console.WriteLine(test2);
 
         //if (test is null)
         //    return;
 
         //System.Console.WriteLine(test.PersonId);
+
+
 
         System.Console.ReadKey();
     }
