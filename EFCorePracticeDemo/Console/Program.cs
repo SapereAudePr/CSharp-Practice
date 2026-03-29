@@ -1,8 +1,12 @@
-﻿using Infrastructure;
+﻿using CsvHelper;
+using Domain.Entities;
+using Infrastructure;
 using Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Formats.Asn1;
+using System.Globalization;
 
 namespace Console;
 
@@ -209,6 +213,23 @@ internal class Program
         //System.Console.WriteLine(test.PersonId);
 
 
+
+
+
+
+        var desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+        var path = Path.Combine(desktop, "Bank_Churn.csv");
+
+        using var reader = new StreamReader(path);
+        using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+
+        var customers = csv.GetRecords<Customer>().ToList();
+
+        await db.Customers.AddRangeAsync(customers);
+        await db.SaveChangesAsync();
+
+        System.Console.WriteLine("Add process is over");
 
         System.Console.ReadKey();
     }

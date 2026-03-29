@@ -15,6 +15,8 @@ public class DemoDbContext : DbContext
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Person> Persons { get; set; }
 
+    public DbSet<Customer> Customers { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Manual registering
