@@ -1,29 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entity;
+using Microsoft.EntityFrameworkCore;
 
-namespace Web;
-
-public partial class BankDbContext : DbContext
+namespace Infrastructure.Persistence
 {
-    public BankDbContext()
+    public class BankDbContext : DbContext
     {
-    }
-
-    public BankDbContext(DbContextOptions<BankDbContext> options)
-        : base(options)
-    {
-    }
-
-    public virtual DbSet<BankChurn> BankChurns { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<BankChurn>(entity =>
+        public BankDbContext(DbContextOptions options) : base(options)
         {
-            entity.Property(e => e.CustomerId).ValueGeneratedNever();
-        });
+        }
 
-        OnModelCreatingPartial(modelBuilder);
+        public DbSet<BankChurn> BankChurn { get; set; }
+
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

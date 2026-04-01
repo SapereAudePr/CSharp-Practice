@@ -1,21 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Web;
+namespace Domain.Entity;
 
-[Table("Bank_Churn")]
-public partial class BankChurn
+public class BankChurn
 {
     [Key]
     public int CustomerId { get; set; }
+
 
     [StringLength(50)]
     public string Surname { get; set; } = null!;
 
     public short CreditScore { get; set; }
 
+
     [StringLength(50)]
     public string Geography { get; set; } = null!;
+
 
     [StringLength(50)]
     public string Gender { get; set; } = null!;

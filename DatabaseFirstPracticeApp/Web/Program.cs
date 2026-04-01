@@ -1,4 +1,4 @@
-
+using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Web
@@ -20,6 +20,22 @@ namespace Web
                 options.UseSqlServer(builder.Configuration.GetConnectionString("BankDemoCS")));
 
             var app = builder.Build();
+
+            //app.MapGet("/api/demo", async (BankDbContext dbContext) =>
+            //{
+            //    var results = await dbContext.BankChurns
+            //    .Select(x => new
+            //    {
+            //        x.Surname,
+            //        x.Balance,
+            //        x.Tenure
+
+            //    }).ToListAsync();
+
+            //    Console.WriteLine(results.Count);
+
+            //    return Results.Ok(results);
+            //});
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
