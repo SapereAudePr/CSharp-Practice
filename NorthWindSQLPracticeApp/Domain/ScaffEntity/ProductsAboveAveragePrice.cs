@@ -2,20 +2,14 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Entity;
+namespace Domain.ScaffEntity;
 
 [Keyless]
-public class SalesByCategory
+public partial class ProductsAboveAveragePrice
 {
-    [Column("CategoryID")]
-    public int CategoryId { get; set; }
-
-    [StringLength(15)]
-    public string CategoryName { get; set; } = null!;
-
     [StringLength(40)]
     public string ProductName { get; set; } = null!;
 
     [Column(TypeName = "money")]
-    public decimal? ProductSales { get; set; }
+    public decimal? UnitPrice { get; set; }
 }

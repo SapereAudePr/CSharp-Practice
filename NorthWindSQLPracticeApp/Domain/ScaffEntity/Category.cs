@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Entity;
+namespace Domain.ScaffEntity;
 
 [Index("CategoryName", Name = "CategoryName")]
-public class Category
+public partial class Category
 {
     [Key]
     [Column("CategoryID")]

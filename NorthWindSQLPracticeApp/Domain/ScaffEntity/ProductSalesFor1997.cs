@@ -1,15 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Entity;
+namespace Domain.ScaffEntity;
 
 [Keyless]
-public class SalesByCategory
+public partial class ProductSalesFor1997
 {
-    [Column("CategoryID")]
-    public int CategoryId { get; set; }
-
     [StringLength(15)]
     public string CategoryName { get; set; } = null!;
 

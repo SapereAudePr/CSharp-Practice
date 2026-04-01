@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Entity;
+namespace Domain.ScaffEntity;
 
 [Keyless]
-public class CustomerAndSuppliersByCity
+public partial class CustomerAndSuppliersByCity
 {
     [StringLength(15)]
     public string? City { get; set; }

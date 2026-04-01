@@ -2,13 +2,13 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace API;
+namespace Domain.Entity;
 
 [Index("City", Name = "City")]
 [Index("CompanyName", Name = "CompanyName")]
 [Index("PostalCode", Name = "PostalCode")]
 [Index("Region", Name = "Region")]
-public partial class Customer
+public class Customer
 {
     [Key]
     [Column("CustomerID")]

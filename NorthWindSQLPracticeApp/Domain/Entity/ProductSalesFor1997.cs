@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace API;
+namespace Domain.Entity;
 
 [Keyless]
-public partial class ProductSalesFor1997
+public class ProductSalesFor1997
 {
     [StringLength(15)]
     public string CategoryName { get; set; } = null!;

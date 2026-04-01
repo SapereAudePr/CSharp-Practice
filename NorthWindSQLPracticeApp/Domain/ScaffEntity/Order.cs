@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Entity;
+namespace Domain.ScaffEntity;
 
 [Index("CustomerId", Name = "CustomerID")]
 [Index("CustomerId", Name = "CustomersOrders")]
@@ -12,7 +14,7 @@ namespace Domain.Entity;
 [Index("ShipPostalCode", Name = "ShipPostalCode")]
 [Index("ShippedDate", Name = "ShippedDate")]
 [Index("ShipVia", Name = "ShippersOrders")]
-public class Order
+public partial class Order
 {
     [Key]
     [Column("OrderID")]

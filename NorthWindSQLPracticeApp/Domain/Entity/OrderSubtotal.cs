@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace API;
+namespace Domain.Entity;
 
 [Keyless]
-public partial class OrderSubtotal
+public class OrderSubtotal
 {
     [Column("OrderID")]
     public int OrderId { get; set; }

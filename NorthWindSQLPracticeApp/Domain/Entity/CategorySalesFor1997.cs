@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace API;
+namespace Domain.Entity;
 
 [Keyless]
-public partial class CategorySalesFor1997
+public class CategorySalesFor1997
 {
     [StringLength(15)]
     public string CategoryName { get; set; } = null!;

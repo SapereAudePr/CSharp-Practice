@@ -1,20 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Entity;
+namespace Domain.ScaffEntity;
 
-[Index("CustomerId", Name = "CustomerID")]
-[Index("CustomerId", Name = "CustomersOrders")]
-[Index("EmployeeId", Name = "EmployeeID")]
-[Index("EmployeeId", Name = "EmployeesOrders")]
-[Index("OrderDate", Name = "OrderDate")]
-[Index("ShipPostalCode", Name = "ShipPostalCode")]
-[Index("ShippedDate", Name = "ShippedDate")]
-[Index("ShipVia", Name = "ShippersOrders")]
-public class Order
+[Keyless]
+public partial class OrdersQry
 {
-    [Key]
     [Column("OrderID")]
     public int OrderId { get; set; }
 
@@ -57,18 +51,21 @@ public class Order
     [StringLength(15)]
     public string? ShipCountry { get; set; }
 
-    [ForeignKey("CustomerId")]
-    [InverseProperty("Orders")]
-    public virtual Customer? Customer { get; set; }
+    [StringLength(40)]
+    public string CompanyName { get; set; } = null!;
 
-    [ForeignKey("EmployeeId")]
-    [InverseProperty("Orders")]
-    public virtual Employee? Employee { get; set; }
+    [StringLength(60)]
+    public string? Address { get; set; }
 
-    [InverseProperty("Order")]
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+    [StringLength(15)]
+    public string? City { get; set; }
 
-    [ForeignKey("ShipVia")]
-    [InverseProperty("Orders")]
-    public virtual Shipper? ShipViaNavigation { get; set; }
+    [StringLength(15)]
+    public string? Region { get; set; }
+
+    [StringLength(10)]
+    public string? PostalCode { get; set; }
+
+    [StringLength(15)]
+    public string? Country { get; set; }
 }

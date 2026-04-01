@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace API;
+namespace Domain.Entity;
 
 [Keyless]
-public partial class OrdersQry
+public class OrdersQry
 {
     [Column("OrderID")]
     public int OrderId { get; set; }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Domain.Entity;
 
 [Keyless]
-public partial class ProductsAboveAveragePrice
+public class ProductsAboveAveragePrice
 {
     [StringLength(40)]
     public string ProductName { get; set; } = null!;

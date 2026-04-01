@@ -1,72 +1,68 @@
-﻿using Domain.ScaffEntity;
+﻿using Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence;
 
-public partial class NorthWindDbContext : DbContext
+public class MyDbContext : DbContext
 {
-    public NorthWindDbContext()
+    public MyDbContext(DbContextOptions options) : base(options)
     {
     }
 
-    public NorthWindDbContext(DbContextOptions<NorthWindDbContext> options)
-        : base(options)
-    {
-    }
 
-    public virtual DbSet<AlphabeticalListOfProduct> AlphabeticalListOfProducts { get; set; }
+    public DbSet<AlphabeticalListOfProduct> AlphabeticalListOfProducts { get; set; }
 
-    public virtual DbSet<Category> Categories { get; set; }
+    public DbSet<Category> Categories { get; set; }
 
-    public virtual DbSet<CategorySalesFor1997> CategorySalesFor1997s { get; set; }
+    public DbSet<CategorySalesFor1997> CategorySalesFor1997s { get; set; }
 
-    public virtual DbSet<CurrentProductList> CurrentProductLists { get; set; }
+    public DbSet<CurrentProductList> CurrentProductLists { get; set; }
 
-    public virtual DbSet<Customer> Customers { get; set; }
+    public DbSet<Customer> Customers { get; set; }
 
-    public virtual DbSet<CustomerAndSuppliersByCity> CustomerAndSuppliersByCities { get; set; }
+    public DbSet<CustomerAndSuppliersByCity> CustomerAndSuppliersByCities { get; set; }
 
-    public virtual DbSet<CustomerDemographic> CustomerDemographics { get; set; }
+    public DbSet<CustomerDemographic> CustomerDemographics { get; set; }
 
-    public virtual DbSet<Employee> Employees { get; set; }
+    public DbSet<Employee> Employees { get; set; }
 
-    public virtual DbSet<Invoice> Invoices { get; set; }
+    public DbSet<Invoice> Invoices { get; set; }
 
-    public virtual DbSet<Order> Orders { get; set; }
+    public DbSet<Order> Orders { get; set; }
 
-    public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+    public DbSet<OrderDetail> OrderDetails { get; set; }
 
-    public virtual DbSet<OrderDetailsExtended> OrderDetailsExtendeds { get; set; }
+    public DbSet<OrderDetailsExtended> OrderDetailsExtendeds { get; set; }
 
-    public virtual DbSet<OrderSubtotal> OrderSubtotals { get; set; }
+    public DbSet<OrderSubtotal> OrderSubtotals { get; set; }
 
-    public virtual DbSet<OrdersQry> OrdersQries { get; set; }
+    public DbSet<OrdersQry> OrdersQries { get; set; }
 
-    public virtual DbSet<Product> Products { get; set; }
+    public DbSet<Product> Products { get; set; }
 
-    public virtual DbSet<ProductSalesFor1997> ProductSalesFor1997s { get; set; }
+    public DbSet<ProductSalesFor1997> ProductSalesFor1997s { get; set; }
 
-    public virtual DbSet<ProductsAboveAveragePrice> ProductsAboveAveragePrices { get; set; }
+    public DbSet<ProductsAboveAveragePrice> ProductsAboveAveragePrices { get; set; }
 
-    public virtual DbSet<ProductsByCategory> ProductsByCategories { get; set; }
+    public DbSet<ProductsByCategory> ProductsByCategories { get; set; }
 
-    public virtual DbSet<QuarterlyOrder> QuarterlyOrders { get; set; }
+    public DbSet<QuarterlyOrder> QuarterlyOrders { get; set; }
 
-    public virtual DbSet<Region> Regions { get; set; }
+    public DbSet<Region> Regions { get; set; }
 
-    public virtual DbSet<SalesByCategory> SalesByCategories { get; set; }
+    public DbSet<SalesByCategory> SalesByCategories { get; set; }
 
-    public virtual DbSet<SalesTotalsByAmount> SalesTotalsByAmounts { get; set; }
+    public DbSet<SalesTotalsByAmount> SalesTotalsByAmounts { get; set; }
 
-    public virtual DbSet<Shipper> Shippers { get; set; }
+    public DbSet<Shipper> Shippers { get; set; }
 
-    public virtual DbSet<SummaryOfSalesByQuarter> SummaryOfSalesByQuarters { get; set; }
+    public DbSet<SummaryOfSalesByQuarter> SummaryOfSalesByQuarters { get; set; }
 
-    public virtual DbSet<SummaryOfSalesByYear> SummaryOfSalesByYears { get; set; }
+    public DbSet<SummaryOfSalesByYear> SummaryOfSalesByYears { get; set; }
 
-    public virtual DbSet<Supplier> Suppliers { get; set; }
+    public DbSet<Supplier> Suppliers { get; set; }
 
-    public virtual DbSet<Territory> Territories { get; set; }
+    public DbSet<Territory> Territories { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -279,9 +275,5 @@ public partial class NorthWindDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Territories_Region");
         });
-
-        OnModelCreatingPartial(modelBuilder);
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Entity;
+namespace Domain.ScaffEntity;
 
 [PrimaryKey("OrderId", "ProductId")]
 [Table("Order Details")]
@@ -10,7 +12,7 @@ namespace Domain.Entity;
 [Index("OrderId", Name = "OrdersOrder_Details")]
 [Index("ProductId", Name = "ProductID")]
 [Index("ProductId", Name = "ProductsOrder_Details")]
-public class OrderDetail
+public partial class OrderDetail
 {
     [Key]
     [Column("OrderID")]

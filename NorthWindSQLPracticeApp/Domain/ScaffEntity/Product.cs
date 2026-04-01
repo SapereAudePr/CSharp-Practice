@@ -1,15 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Entity;
+namespace Domain.ScaffEntity;
 
 [Index("CategoryId", Name = "CategoriesProducts")]
 [Index("CategoryId", Name = "CategoryID")]
 [Index("ProductName", Name = "ProductName")]
 [Index("SupplierId", Name = "SupplierID")]
 [Index("SupplierId", Name = "SuppliersProducts")]
-public class Product
+public partial class Product
 {
     [Key]
     [Column("ProductID")]

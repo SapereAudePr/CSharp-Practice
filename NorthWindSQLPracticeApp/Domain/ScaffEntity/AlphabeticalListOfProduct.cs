@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Entity;
+namespace Domain.ScaffEntity;
 
 [Keyless]
-public class AlphabeticalListOfProduct
+public partial class AlphabeticalListOfProduct
 {
     [Column("ProductID")]
     public int ProductId { get; set; }

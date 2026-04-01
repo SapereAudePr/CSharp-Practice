@@ -2,15 +2,18 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Entity;
+namespace Domain.ScaffEntity;
 
+[Index("City", Name = "City")]
 [Index("CompanyName", Name = "CompanyName")]
 [Index("PostalCode", Name = "PostalCode")]
-public class Supplier
+[Index("Region", Name = "Region")]
+public partial class Customer
 {
     [Key]
-    [Column("SupplierID")]
-    public int SupplierId { get; set; }
+    [Column("CustomerID")]
+    [StringLength(5)]
+    public string CustomerId { get; set; } = null!;
 
     [StringLength(40)]
     public string CompanyName { get; set; } = null!;
@@ -42,9 +45,10 @@ public class Supplier
     [StringLength(24)]
     public string? Fax { get; set; }
 
-    [Column(TypeName = "ntext")]
-    public string? HomePage { get; set; }
+    [InverseProperty("Customer")]
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
-    [InverseProperty("Supplier")]
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+    [ForeignKey("CustomerId")]
+    [InverseProperty("Customers")]
+    public virtual ICollection<CustomerDemographic> CustomerTypes { get; set; } = new List<CustomerDemographic>();
 }
