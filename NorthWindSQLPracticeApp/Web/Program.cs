@@ -16,9 +16,9 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        builder.Services.AddDbContext<NorthWindDbContext>(options =>
+        builder.Services.AddDbContext<MyDbContext>(options =>
         {
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("MyDbConnection"));
         });
 
         var app = builder.Build();
