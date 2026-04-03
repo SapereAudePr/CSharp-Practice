@@ -1,8 +1,7 @@
 ﻿namespace Application.DTO;
 
-public class OrderDto
+public class CreateOrderDto
 {
-    public int OrderId { get; set; }
     public DateTime? OrderDate { get; set; }
 
     public DateTime? RequiredDate { get; set; }

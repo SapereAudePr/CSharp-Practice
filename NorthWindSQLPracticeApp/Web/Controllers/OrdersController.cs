@@ -1,4 +1,5 @@
-﻿using Application.Map;
+﻿using Application.DTO;
+using Application.Map;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,6 @@ public class OrdersController : ControllerBase
         int pageSize = 10)
     {
         var orders = dbContext.Orders
-            
             .AsNoTracking()
             .AsQueryable();
 
@@ -71,7 +71,7 @@ public class OrdersController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetById(int id)
+    public async Task<IActionResult> GetById([FromRoute] int id)
     {
         var result = await dbContext.Orders
             .Include(x => x.Employee)
@@ -81,5 +81,46 @@ public class OrdersController : ControllerBase
             return NotFound();
 
         return Ok(result.ToDto());
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateOrderDto orderDto)
+    {
+        var entity = orderDto.CreateToDomain();
+
+        dbContext.Orders.Add(entity);
+
+        await dbContext.SaveChangesAsync();
+
+        var responseDto = entity.ToDto();
+
+        return CreatedAtAction(nameof(GetById), new { id = responseDto.OrderId }, responseDto);
+    }
+
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateOrderDto orderDto)
+    {
+        var orderDomain = await dbContext.Orders.FindAsync(id);
+        if (orderDomain is null)
+            return NotFound();
+
+        orderDomain.MapUpdateToDomain(orderDto);
+
+        await dbContext.SaveChangesAsync();
+
+        return Ok(orderDomain.ToDto());
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> Delete([FromRoute] int id)
+    {
+        var toDelete = await dbContext.Orders.FindAsync(id);
+        if (toDelete is null)
+            return NotFound();
+
+        dbContext.Remove(toDelete);
+        await dbContext.SaveChangesAsync();
+
+        return NoContent();
     }
 }

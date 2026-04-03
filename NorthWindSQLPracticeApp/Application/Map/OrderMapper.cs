@@ -67,4 +67,41 @@ public static class OrderMapper
             EmployeeId = orderDto.EmployeeId
         };
     }
+
+    public static Order CreateToDomain(this CreateOrderDto orderDto)
+    {
+        return new Order()
+        {
+            OrderDate = orderDto.OrderDate,
+            RequiredDate = orderDto.RequiredDate,
+            ShippedDate = orderDto.ShippedDate,
+            ShipVia = orderDto.ShipVia,
+            Freight = orderDto.Freight,
+            ShipName = orderDto.ShipName,
+            ShipCity = orderDto.ShipCity,
+            ShipAddress = orderDto.ShipAddress,
+            ShipRegion = orderDto.ShipRegion,
+            ShipPostalCode = orderDto.ShipPostalCode,
+            ShipCountry = orderDto.ShipCountry,
+            CustomerId = orderDto.CustomerId,
+            EmployeeId = orderDto.EmployeeId
+        };
+    }
+
+    public static void MapUpdateToDomain(this Order orderDomain, UpdateOrderDto orderDto)
+    {
+        orderDomain.OrderDate = orderDto.OrderDate;
+        orderDomain.RequiredDate = orderDto.RequiredDate;
+        orderDomain.ShippedDate = orderDto.ShippedDate;
+        orderDomain.ShipVia = orderDto.ShipVia;
+        orderDomain.Freight = orderDto.Freight;
+        orderDomain.ShipName = orderDto.ShipName;
+        orderDomain.ShipCity = orderDto.ShipCity;
+        orderDomain.ShipAddress = orderDto.ShipAddress;
+        orderDomain.ShipRegion = orderDto.ShipRegion;
+        orderDomain.ShipPostalCode = orderDto.ShipPostalCode;
+        orderDomain.ShipCountry = orderDto.ShipCountry;
+        orderDomain.CustomerId = orderDto.CustomerId;
+        orderDomain.EmployeeId = orderDto.EmployeeId;
+    }
 }
