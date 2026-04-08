@@ -1,5 +1,7 @@
 ﻿using Application.DTO;
 using Application.Map;
+using FluentValidation;
+using FluentValidation.Results;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +13,15 @@ namespace API.Controllers;
 public class OrdersController : ControllerBase
 {
     private readonly MyDbContext dbContext;
+    private readonly IValidator<CreateOrderDto> createValidator;
+    private readonly IValidator<UpdateOrderDto> updateValidator;
 
-    public OrdersController(MyDbContext dbContext)
+
+    public OrdersController(MyDbContext dbContext, IValidator<CreateOrderDto> createValidator, IValidator<UpdateOrderDto> updateValidator)
     {
         this.dbContext = dbContext;
+        this.createValidator = createValidator;
+        this.updateValidator = updateValidator;
     }
 
     [HttpGet]
@@ -86,6 +93,13 @@ public class OrdersController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateOrderDto orderDto)
     {
+        ValidationResult result = await createValidator.ValidateAsync(orderDto);
+        if (!result.IsValid)
+        {
+            return BadRequest(result.ToDictionary());
+        }
+
+
         var entity = orderDto.CreateToDomain();
 
         dbContext.Orders.Add(entity);
@@ -100,6 +114,12 @@ public class OrdersController : ControllerBase
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateOrderDto orderDto)
     {
+        ValidationResult result = await updateValidator.ValidateAsync(orderDto);
+        if (!result.IsValid)
+        {
+            return BadRequest(result.ToDictionary());
+        }
+
         var orderDomain = await dbContext.Orders.FindAsync(id);
         if (orderDomain is null)
             return NotFound();
