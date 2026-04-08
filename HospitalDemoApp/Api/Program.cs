@@ -1,3 +1,5 @@
+using Infrastructure.Persistence.Configuration.DI;
+
 namespace Api;
 
 public class Program
@@ -13,7 +15,7 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-
+        builder.Services.AddInfrastructureServices(builder.Configuration);
 
         var app = builder.Build();
 

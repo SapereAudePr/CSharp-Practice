@@ -16,10 +16,14 @@ public abstract class AuditableEntityConfiguration<T> : IEntityTypeConfiguration
             .IsRequired();
 
         builder.Property(x => x.CreationDate)
-            .IsRequired();
+            .HasDefaultValueSql("GETUTCDATE()")
+            .ValueGeneratedOnAdd()
+            .Metadata.SetAfterSaveBehavior
+            (Microsoft.EntityFrameworkCore.Metadata.PropertySaveBehavior.Ignore);
 
         builder.Property(x => x.UpdateDate)
-            .IsRequired();
+            .HasDefaultValueSql("GETUTCDATE()")
+            .ValueGeneratedOnAddOrUpdate();
 
         builder.Property(x => x.CreatedBy)
             .HasMaxLength(30)
