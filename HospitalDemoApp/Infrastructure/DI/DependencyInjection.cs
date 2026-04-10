@@ -1,9 +1,10 @@
-﻿using Infrastructure.Persistence.Interceptor;
+﻿using Infrastructure.Interceptor;
+using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure.Persistence.Configuration.DI;
+namespace Infrastructure.DI;
 
 public static class DependencyInjection
 {

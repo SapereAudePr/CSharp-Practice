@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace Infrastructure.Persistence.Interceptor;
+namespace Infrastructure.Interceptor;
 
 public class AuditInterceptor : SaveChangesInterceptor
 {
@@ -20,6 +20,8 @@ public class AuditInterceptor : SaveChangesInterceptor
             {
                 entry.Property(x => x.CreationDate).CurrentValue = now;
                 entry.Property(x => x.UpdateDate).CurrentValue = now;
+
+                entry.Property(x => x.CreationDate).IsModified = false;
             }
 
             if (entry.State == EntityState.Modified)

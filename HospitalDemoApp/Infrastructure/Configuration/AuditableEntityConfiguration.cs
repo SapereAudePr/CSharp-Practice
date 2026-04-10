@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Persistence.Configuration;
+namespace Infrastructure.Configuration;
 
 public abstract class AuditableEntityConfiguration<T> : IEntityTypeConfiguration<T>
     where T : AuditableEntity

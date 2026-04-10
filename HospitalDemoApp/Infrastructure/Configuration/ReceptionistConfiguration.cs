@@ -1,0 +1,33 @@
+﻿using Application.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Infrastructure.Configuration;
+
+public class ReceptionistConfiguration : AuditableEntityConfiguration<Receptionist>
+{
+    public override void Configure(EntityTypeBuilder<Receptionist> builder)
+    {
+        base.Configure(builder);
+
+
+        builder.OwnsMany(x => x.KnownLanguages, l =>
+        {
+            l.ToTable("ReceptionistLanguages");
+            l.WithOwner().HasForeignKey("ReceptionistId");
+            l.Property<int>("Id");
+            l.HasKey("Id");
+            l.Property(x => x.Name).HasMaxLength(50).IsRequired();
+            l.Property(x => x.Proficiency).HasMaxLength(50).IsRequired();
+        });
+
+        builder.Property(x => x.DeskLocation)
+            .HasField("_deskLocation")
+            .HasMaxLength(30)
+            .IsRequired();
+
+        builder.Property(x => x.HandlesInsuranceBilling)
+            .HasDefaultValue(false)
+            .IsRequired();
+    }
+}

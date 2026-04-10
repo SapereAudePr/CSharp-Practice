@@ -1,4 +1,4 @@
-using Infrastructure.Persistence.Configuration.DI;
+using Infrastructure.DI;
 
 namespace Api;
 

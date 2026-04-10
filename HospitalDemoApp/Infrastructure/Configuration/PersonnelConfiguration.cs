@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Persistence.Configuration;
+namespace Infrastructure.Configuration;
 
 public class PersonnelConfiguration : AuditableEntityConfiguration<Personnel>
 {
@@ -18,6 +18,7 @@ public class PersonnelConfiguration : AuditableEntityConfiguration<Personnel>
             .HasValue<Technician>("Technician")
             .HasValue<Receptionist>("Receptionist")
             .HasValue<Janitor>("Janitor");
+
 
         builder.HasOne(x => x.Department)
             .WithMany(x => x.Personnel)
