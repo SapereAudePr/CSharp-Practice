@@ -46,9 +46,12 @@ public class DepartmentConfiguration : AuditableEntityConfiguration<Department>
             ea.WithOwner().HasForeignKey("DepartmentId");
             ea.Property<int>("Id");
             ea.HasKey("Id");
-            ea.Property(x => x.MailAddress)
+            ea.Property(x => x.Value)
             .IsRequired()
             .HasMaxLength(254);
         });
+
+        builder.Navigation(x => x.EmailAddresses)
+            .HasField("_emailAddresses");
     }
 }

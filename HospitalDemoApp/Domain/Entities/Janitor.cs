@@ -25,7 +25,7 @@ public class Janitor : Personnel
 
     public void UpdateAssignedZone(string zone)
     {
-        _assignedZone = _assignedZone.CheckTooLongOrEmpty(50);
+        _assignedZone = zone.CheckTooLongOrEmpty(50);
     }
 
     public void EnableBiohazardCertificate(bool enabled)
@@ -35,6 +35,6 @@ public class Janitor : Personnel
 
     public void UpdateSecurityClearanceLevel(string clearanceLevel)
     {
-        _securityClearanceLevel = _securityClearanceLevel.CheckTooLongOrEmpty(50);
+        _securityClearanceLevel = clearanceLevel.CheckTooLongOrEmpty(50);
     }
 }

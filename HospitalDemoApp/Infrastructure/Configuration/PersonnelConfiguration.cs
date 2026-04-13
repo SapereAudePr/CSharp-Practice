@@ -42,7 +42,7 @@ public class PersonnelConfiguration : AuditableEntityConfiguration<Personnel>
 
         builder.OwnsOne(x => x.EmailAddress, ea =>
         {
-            ea.Property(x => x.MailAddress)
+            ea.Property(x => x.Value)
             .HasMaxLength(254)
             .IsRequired();
         });
