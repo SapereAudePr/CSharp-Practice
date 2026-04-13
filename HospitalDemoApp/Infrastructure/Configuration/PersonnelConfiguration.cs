@@ -27,7 +27,6 @@ public class PersonnelConfiguration : AuditableEntityConfiguration<Personnel>
 
 
         builder.Property(x => x.Gender)
-            .HasMaxLength(10)
             .IsRequired();
 
         builder.OwnsOne(x => x.PhoneNumber, pn =>

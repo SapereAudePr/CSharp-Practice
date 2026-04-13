@@ -46,7 +46,8 @@ public class Receptionist : Personnel
         _knownLanguages.Remove(language);
     }
 
-    public void ChangeDeskLocation(string location) => _deskLocation = Guard.CheckNull(location);
+    public void ChangeDeskLocation(string location) => _deskLocation =
+        _deskLocation.CheckNullOrWhiteSpace();
 
     public void SetInsuranceBilling(bool enabled) => HandlesInsuranceBilling = enabled;
 }

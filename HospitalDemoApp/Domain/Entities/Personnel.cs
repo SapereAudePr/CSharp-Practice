@@ -1,15 +1,74 @@
 ﻿using Application.Common;
 using Application.Enums;
 using Application.ValueObjects;
+using Domain.Common;
 
 namespace Application.Entities;
+
 public abstract class Personnel : AuditableEntity
 {
-    public Gender Gender { get; set; }
-    public DateTime ShiftStart { get; set; }
-    public DateTime ShiftEnd { get; set; }
-    public Department Department { get; set; } = null!;
-    public int DepartmentId { get; set; }
-    public PhoneNumber PhoneNumber { get; set; } = null!;
-    public EmailAddress EmailAddress { get; set; } = null!;
+    public Department Department { get; private set; } = null!;
+    public int DepartmentId { get; private set; }
+
+    private DateTime _shiftStart;
+    private DateTime _shiftEnd;
+    public DateTime ShiftStart => _shiftStart;
+    public DateTime ShiftEnd => _shiftEnd;
+    public Gender Gender { get; private set; }
+
+    private PhoneNumber _phoneNumber = null!;
+    private EmailAddress _emailAddress = null!;
+
+    public PhoneNumber PhoneNumber => _phoneNumber;
+    public EmailAddress EmailAddress => _emailAddress;
+
+    protected Personnel(
+        int departmentId,
+        Gender gender,
+        DateTime shiftStart,
+        DateTime shiftEnd,
+        PhoneNumber phoneNumber,
+        EmailAddress emailAddress)
+    {
+        AssignDepartment(departmentId);
+        UpdateGender(gender);
+        SetShift(shiftStart, shiftEnd);
+        UpdatePhoneNumber(phoneNumber);
+        UpdateMailAddress(emailAddress);
+    }
+
+    protected Personnel () { }
+
+    public void AssignDepartment(int departmentId)
+    {
+        departmentId.CheckIfZero();
+        DepartmentId = departmentId;
+    }
+
+    public void UpdateGender(Gender gender)
+    {
+        Gender = gender;
+    }
+
+    public void SetShift(DateTime startDate, DateTime endDate)
+    {
+        startDate.CheckStartHigherThanEnd(endDate);
+
+        _shiftStart = startDate;
+        _shiftEnd = endDate;
+    }
+
+    public void UpdatePhoneNumber(PhoneNumber number)
+    {
+        number.CheckNull(
+            predicate: n => _phoneNumber is null || _phoneNumber.Equals(n),
+            predicateMessage: "Cannot assign same number");
+
+        _phoneNumber = number;
+    }
+
+    public void UpdateMailAddress(EmailAddress email)
+    {
+        _emailAddress = email ?? throw new ArgumentException(nameof(email));
+    }
 }

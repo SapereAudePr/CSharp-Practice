@@ -1,47 +1,73 @@
 ﻿using Application.Common;
+using Application.ValueObjects;
 using Domain.Common;
 
 namespace Application.Entities;
 
 public class Hospital : AuditableEntity
 {
+    private string _address = null!;
+    public string Address => _address;
 
-    public Hospital(string address, ICollection<Department> departments, string mainPhoneNumber, string mainEmailAddress, DateTimeOffset builtDate)
+    public ICollection<Department> Departments { get; set; } = new HashSet<Department>();
+
+
+    private PhoneNumber _mainPhoneNumber = null!;
+    public PhoneNumber MainPhoneNumber => _mainPhoneNumber;
+
+
+    private EmailAddress _mainEmailAddress = null!;
+    public EmailAddress MainEmailAddress => _mainEmailAddress;
+
+    private DateTimeOffset _builtDate;
+
+    public DateTimeOffset BuiltDate => _builtDate;
+
+    public Hospital(
+        string address,
+        ICollection<Department> departments,
+        PhoneNumber mainPhoneNumber,
+        EmailAddress mainEmailAddress,
+        DateTimeOffset builtDate)
     {
-        Address = address;
+        UpdateAddress(address);
         Departments = departments;
-        MainPhoneNumber = mainPhoneNumber;
-        MainEmailAddress = mainEmailAddress;
-        BuiltDate = builtDate;
+        UpdatePhoneNumber(mainPhoneNumber);
+        UpdateEmailAddress(mainEmailAddress);
+        UpdateBuiltDate(builtDate);
     }
 
     private Hospital() { }
 
-    private string _address = null!;
-    public string Address
+    public void AddDepartment(Department department)
     {
-        get => _address;
-        private set
-        {
-            _address = Guard.CheckNullOrLong(value, 256);
-        }
+        Departments.Add(department);
     }
 
-    public ICollection<Department> Departments { get; set; } = new HashSet<Department>();
-    public string MainPhoneNumber { get; set; } = null!;
-    public string MainEmailAddress { get; set; } = null!;
-
-    private DateTimeOffset _builtDate;
-
-    public DateTimeOffset BuiltDate
+    public void RemoveDepartment(Department department)
     {
-        get => _builtDate;
-        private set
-        {
-            if (value > DateTime.UtcNow)
-                throw new ArgumentOutOfRangeException("Invalid BuiltDate");
+        Departments.Remove(department);
+    }
 
-            _builtDate = value;
-        }
+    public void UpdateAddress(string address)
+    {
+        _address = address.CheckTooLongOrEmpty(256);
+    }
+
+    public void UpdatePhoneNumber(PhoneNumber phoneNumber)
+    {
+        _mainPhoneNumber = phoneNumber;
+    }
+
+    public void UpdateEmailAddress(EmailAddress emailAddress)
+    {
+        _mainEmailAddress = emailAddress;
+    }
+
+    public void UpdateBuiltDate(DateTimeOffset builtDate)
+    {
+        builtDate.CheckCreationDateTimeOffset();
+
+        _builtDate = builtDate;
     }
 }

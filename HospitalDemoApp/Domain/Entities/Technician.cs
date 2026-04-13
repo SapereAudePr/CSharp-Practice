@@ -5,51 +5,40 @@ namespace Application.Entities;
 public class Technician : Personnel
 {
     private string _technicalCategory = null!;
-    private string _equipmentSpecialty = null!;
-    private string _certificationNumber = null!;
+    public string TechnicalCategory => _technicalCategory;
 
-    public Technician(string technicalCategory,
+
+    private string _equipmentSpecialty = null!;
+    public string EquipmentSpecialty => _equipmentSpecialty;
+
+
+    private string _certificationNumber = null!;
+    public string CertificationNumber => _certificationNumber;
+
+    public Technician(
+        string technicalCategory,
         string equipmentSpecialty,
         string certificationNumber)
     {
-        TechnicalCategory = technicalCategory;
-        EquipmentSpecialty = equipmentSpecialty;
-        CertificationNumber = certificationNumber;
+        SetTechnicalCategory(technicalCategory);
+        SetEquipmentSpecialty(equipmentSpecialty);
+        SetCertificationNumber(certificationNumber);
     }
 
     private Technician() { }
 
-    
-
-    public string TechnicalCategory
+    public void SetTechnicalCategory(string category)
     {
-        get => _technicalCategory;
-        private set
-        {
-            _technicalCategory = Guard.CheckNullOrLong(value, 30);
-        }
+        _technicalCategory = _technicalCategory.CheckTooLongOrEmpty(30);
     }
 
-   
-
-    public string EquipmentSpecialty 
+    public void SetEquipmentSpecialty(string specialty)
     {
-        get => _equipmentSpecialty;
-        private set
-        {
-            _equipmentSpecialty = Guard.CheckNullOrLong(value, 30);
-        }
+        _equipmentSpecialty = _equipmentSpecialty.CheckTooLongOrEmpty(30);
     }
 
-
-    
-
-    public string CertificationNumber 
+    public void SetCertificationNumber(string number)
     {
-        get => _certificationNumber;
-        private set
-        {
-            _certificationNumber = Guard.CheckNullOrLong(value, 80);
-        }
+        _certificationNumber = _certificationNumber.CheckTooLongOrEmpty(80);
     }
 }

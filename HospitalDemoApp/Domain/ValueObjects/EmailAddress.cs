@@ -1,18 +1,15 @@
-﻿namespace Application.ValueObjects;
+﻿using Domain.Common;
 
-public class EmailAddress
+namespace Application.ValueObjects;
+
+public record EmailAddress
 {
-    public string MailAddress { get; private set; } = null!;
-
-    private EmailAddress() { }
+    public string Value { get; }
 
     public EmailAddress(string mailAddress)
     {
-        if (string.IsNullOrWhiteSpace(mailAddress) || mailAddress.Length > 254)
-        {
-            throw new ArgumentException("Invalid email");
-        }
-
-        MailAddress = mailAddress;
+        Value = mailAddress.ValidateEmailRegex(normalize: true);
     }
 }
+
+

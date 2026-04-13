@@ -4,40 +4,37 @@ namespace Application.Entities;
 
 public class Janitor : Personnel
 {
+    private string _assignedZone = null!;
+    public string AssignedZone => _assignedZone;
+    public bool BiohazardCertified { get; private set; }
+
+    private string _securityClearanceLevel = null!;
+    public string SecurityClearanceLevel => _securityClearanceLevel;
+
     public Janitor(
         string assignedZone,
         bool biohazardCertified,
         string securityClearanceLevel)
     {
-        AssignedZone = assignedZone;
-        BiohazardCertified = biohazardCertified;
-        SecurityClearanceLevel = securityClearanceLevel;
+        UpdateAssignedZone(assignedZone);
+        EnableBiohazardCertificate(biohazardCertified);
+        UpdateSecurityClearanceLevel(securityClearanceLevel);
     }
 
     private Janitor() { }
 
-    private string _assignedZone = null!;
-
-    public string AssignedZone
+    public void UpdateAssignedZone(string zone)
     {
-        get => _assignedZone;
-        private set
-        {
-            _assignedZone = Guard.CheckNullOrLong(value, 50);
-        }
+        _assignedZone = _assignedZone.CheckTooLongOrEmpty(50);
     }
 
-    public bool BiohazardCertified { get; set; }
-
-
-    private string _securityClearanceLevel = null!;
-
-    public string SecurityClearanceLevel
+    public void EnableBiohazardCertificate(bool enabled)
     {
-        get => _securityClearanceLevel;
-        private set
-        {
-            _securityClearanceLevel = Guard.CheckNullOrLong(value, 50);
-        }
+        BiohazardCertified = enabled;
+    }
+
+    public void UpdateSecurityClearanceLevel(string clearanceLevel)
+    {
+        _securityClearanceLevel = _securityClearanceLevel.CheckTooLongOrEmpty(50);
     }
 }

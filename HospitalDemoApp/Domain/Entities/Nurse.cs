@@ -4,50 +4,51 @@ namespace Application.Entities;
 
 public class Nurse : Personnel
 {
+    public bool IsHeadNurse { get; private set; }
+
+    private string _certificationLevel = null!;
+    public string CertificationLevel => _certificationLevel;
+
+    private string _assignedWard = null!;
+    public string AssignedWard => _assignedWard;
+
+    private string _shiftType = null!;
+
+    public string ShiftType => _shiftType;
+
+
     public Nurse(string certificationLevel,
         string assignedWard,
         string shiftType,
         bool isHeadNurse = false)
     {
-        CertificationLevel = certificationLevel;
-        AssignedWard = assignedWard;
-        ShiftType = shiftType;
-        IsHeadNurse = isHeadNurse;
+        UpdateCertificationLevel(certificationLevel);
+        UpdateAssignedWard(assignedWard);
+        UpdateShiftType(shiftType);
+        EnableHeadNurse(isHeadNurse);
     }
 
     private Nurse() { }
 
-    public bool IsHeadNurse { get; set; }
 
-    private string _certificationLevel = null!;
-
-    public string CertificationLevel 
-    { 
-        get => _certificationLevel;
-        private set
-        {
-            _certificationLevel = Guard.CheckNullOrLong(value, 30);
-        } 
-    }
-
-    private string _assignedWard = null!;
-    public string AssignedWard
+    public void EnableHeadNurse(bool enabled)
     {
-        get => _assignedWard;
-        private set
-        {
-            _assignedWard = Guard.CheckNullOrLong(value, 30);
-        }
+        IsHeadNurse = enabled;
     }
 
-
-    private string _shiftType = null!;
-    public string ShiftType
+    public void UpdateCertificationLevel(string certLevel)
     {
-        get => _shiftType;
-        private set
-        {
-            _shiftType = Guard.CheckNullOrLong(value, 30);
-        }
+        _certificationLevel = _certificationLevel.CheckTooLongOrEmpty(30);
     }
+
+    public void UpdateAssignedWard(string ward)
+    {
+        _assignedWard = _assignedWard.CheckTooLongOrEmpty(30);
+    }
+
+    public void UpdateShiftType(string shiftType)
+    {
+        _shiftType = _shiftType.CheckTooLongOrEmpty(30);
+    }
+
 }

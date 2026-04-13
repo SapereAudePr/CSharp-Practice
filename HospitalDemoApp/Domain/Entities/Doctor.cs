@@ -4,34 +4,28 @@ namespace Application.Entities;
 
 public class Doctor : Personnel
 {
+    private string _specialization = null!;
+    public string Specialization => _specialization;
+
+
+    private string _licenseNumber = null!;
+    public string LicenseNumber => _licenseNumber;
+
     public Doctor(string specialization, string licenseNumber)
     {
-        Specialization = specialization;
-        LicenseNumber = licenseNumber;
+        UpdateSpecialization(specialization);
+        UpdateLicenseNumber(licenseNumber);
     }
 
     private Doctor() { }
 
-    private string _specialization = null!;
-
-    public string Specialization
+    public void UpdateSpecialization(string specialization)
     {
-        get => _specialization;
-        set
-        {
-            _specialization = Guard.CheckNullOrLong(value, 50);
-        }
+        _specialization = specialization.CheckTooLongOrEmpty(50);
     }
 
-
-    private string _licenseNumber = null!;
-
-    public string LicenseNumber
+    public void UpdateLicenseNumber(string licenseNumber)
     {
-        get => _licenseNumber;
-        set
-        {
-            _licenseNumber = Guard.CheckNullOrLong(value, 50);
-        }
+        _licenseNumber = licenseNumber.CheckTooLongOrEmpty(50);
     }
 }
