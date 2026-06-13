@@ -20,25 +20,40 @@ public class HospitalConfiguration : AuditableEntityConfiguration<Hospital>
             .HasForeignKey(x => x.HospitalId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.Property(h => h.Address)
+        builder.Property<string>("_address")
+            .HasColumnName("Address")
             .IsRequired()
             .HasMaxLength(256);
 
-        builder.Property(x => x.BuiltDate)
+        builder.Property<DateTimeOffset>("_builtDate")
+            .HasColumnName("BuiltDate")
             .IsRequired();
 
-        builder.Property(h => h.MainEmailAddress)
-            .IsRequired()
-            .HasMaxLength(254);
-
-        builder.HasIndex(h => h.MainEmailAddress)
-            .IsUnique();
-
-        builder.Property(h => h.MainPhoneNumber)
+        builder.OwnsOne(x => x.MainPhoneNumber, pn =>
+        {
+            pn.Property(x => x.Number)
+            .HasColumnName("MainPhoneNumber")
             .IsRequired()
             .HasMaxLength(20);
 
-        builder.HasIndex(h => h.MainPhoneNumber)
-            .IsUnique();
+            pn.Property(x => x.Label)
+            .HasColumnName("MainPhoneLabel")
+            .IsRequired()
+            .HasMaxLength(120);
+        });
+
+        builder.Navigation(x => x.MainPhoneNumber)
+            .HasField("_mainPhoneNumber");
+
+        builder.OwnsOne(x => x.MainEmailAddress, ea =>
+        {
+            ea.Property(x => x.Value)
+            .HasColumnName("MainEmailAddress")
+            .IsRequired()
+            .HasMaxLength(254);
+        });
+
+        builder.Navigation(x => x.MainEmailAddress)
+            .HasField("_mainEmailAddress");
     }
 }

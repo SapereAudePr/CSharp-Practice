@@ -1,14 +1,13 @@
 ﻿using Application.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configuration;
 
-public class TechnicianConfiguration : AuditableEntityConfiguration<Technician>
+public class TechnicianConfiguration : IEntityTypeConfiguration<Technician>
 {
-    public override void Configure(EntityTypeBuilder<Technician> builder)
+    public void Configure(EntityTypeBuilder<Technician> builder)
     {
-        base.Configure(builder);
-
         builder.Property(x => x.TechnicalCategory)
             .HasField("_technicalCategory")
             .HasMaxLength(30)

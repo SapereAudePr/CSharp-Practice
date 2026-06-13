@@ -38,7 +38,13 @@ public class DepartmentConfiguration : AuditableEntityConfiguration<Department>
             pn.Property(x => x.Label)
             .HasMaxLength(120)
             .IsRequired();
+
+            pn.HasIndex("DepartmentId");
+            pn.HasIndex("DepartmentId", "Number", "Label").IsUnique();
         });
+
+        builder.Navigation(x => x.PhoneNumbers)
+            .HasField("_phoneNumbers");
 
         builder.OwnsMany(x => x.EmailAddresses, ea =>
         {
@@ -49,6 +55,9 @@ public class DepartmentConfiguration : AuditableEntityConfiguration<Department>
             ea.Property(x => x.Value)
             .IsRequired()
             .HasMaxLength(254);
+
+            ea.HasIndex("DepartmentId");
+            ea.HasIndex("DepartmentId", "Value").IsUnique();
         });
 
         builder.Navigation(x => x.EmailAddresses)

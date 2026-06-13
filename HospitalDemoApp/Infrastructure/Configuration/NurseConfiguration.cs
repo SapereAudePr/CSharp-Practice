@@ -4,12 +4,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configuration;
 
-public class NurseConfiguration : AuditableEntityConfiguration<Nurse>
+public class NurseConfiguration : IEntityTypeConfiguration<Nurse>
 {
-    public override void Configure(EntityTypeBuilder<Nurse> builder)
+    public void Configure(EntityTypeBuilder<Nurse> builder)
     {
-        base.Configure(builder);
-
         builder.Property(x => x.IsHeadNurse)
             .HasDefaultValue(false)
             .IsRequired();

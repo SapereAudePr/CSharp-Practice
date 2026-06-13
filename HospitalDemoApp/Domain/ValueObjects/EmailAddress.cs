@@ -4,11 +4,12 @@ namespace Application.ValueObjects;
 
 public record EmailAddress
 {
-    public string Value { get; }
+    public string Value { get; } = null!;
+    private EmailAddress() { }
 
-    public EmailAddress(string mailAddress)
+    public EmailAddress(string value)
     {
-        Value = mailAddress.ValidateEmailRegex(normalize: true);
+        Value = value.ValidateEmailRegex(normalize: true);
     }
 }
 

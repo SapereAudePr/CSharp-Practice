@@ -4,13 +4,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configuration;
 
-public class ReceptionistConfiguration : AuditableEntityConfiguration<Receptionist>
+public class ReceptionistConfiguration : IEntityTypeConfiguration<Receptionist>
 {
-    public override void Configure(EntityTypeBuilder<Receptionist> builder)
+    public void Configure(EntityTypeBuilder<Receptionist> builder)
     {
-        base.Configure(builder);
-
-
         builder.OwnsMany(x => x.KnownLanguages, l =>
         {
             l.ToTable("ReceptionistLanguages");

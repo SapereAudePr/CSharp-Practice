@@ -25,6 +25,13 @@ public class PersonnelConfiguration : AuditableEntityConfiguration<Personnel>
             .HasForeignKey(x => x.DepartmentId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        builder.Property<DateTime>("_shiftStart")
+            .HasColumnName("ShiftStart")
+            .IsRequired();
+
+        builder.Property<DateTime>("_shiftEnd")
+            .HasColumnName("ShiftEnd")
+            .IsRequired();
 
         builder.Property(x => x.Gender)
             .IsRequired();

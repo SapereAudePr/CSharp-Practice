@@ -63,7 +63,7 @@ public class Department : AuditableEntity
 
     public void AddEmailAddress(string email)
     {
-        email.CheckTooLongOrEmpty(254);
+        email = email.ValidateEmailRegex(normalize: true);
 
         if (_emailAddresses.Any(x => x.Value == email))
             throw new ArgumentException("Same email exists");

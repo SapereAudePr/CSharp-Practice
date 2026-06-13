@@ -1,14 +1,13 @@
 ﻿using Application.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configuration;
 
-public class DoctorConfiguration : AuditableEntityConfiguration<Doctor>
+public class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
 {
-    public override void Configure(EntityTypeBuilder<Doctor> builder)
+    public void Configure(EntityTypeBuilder<Doctor> builder)
     {
-        base.Configure(builder);
-
         builder.Property(x => x.Specialization)
             .HasField("_specialization")
             .HasMaxLength(50)

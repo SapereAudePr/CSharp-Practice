@@ -25,13 +25,11 @@ public class Hospital : AuditableEntity
 
     public Hospital(
         string address,
-        ICollection<Department> departments,
         PhoneNumber mainPhoneNumber,
         EmailAddress mainEmailAddress,
         DateTimeOffset builtDate)
     {
         UpdateAddress(address);
-        Departments = departments;
         UpdatePhoneNumber(mainPhoneNumber);
         UpdateEmailAddress(mainEmailAddress);
         UpdateBuiltDate(builtDate);

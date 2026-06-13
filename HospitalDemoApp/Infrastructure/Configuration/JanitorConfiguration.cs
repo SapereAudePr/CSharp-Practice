@@ -4,12 +4,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configuration;
 
-public class JanitorConfiguration : AuditableEntityConfiguration<Janitor>
+public class JanitorConfiguration : IEntityTypeConfiguration<Janitor>
 {
-    public override void Configure(EntityTypeBuilder<Janitor> builder)
+    public void Configure(EntityTypeBuilder<Janitor> builder)
     {
-        base.Configure(builder);
-
         builder.Property(x => x.AssignedZone)
             .HasField("_assignedZone")
             .HasMaxLength(50)
