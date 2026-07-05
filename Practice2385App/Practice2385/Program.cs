@@ -88,17 +88,20 @@ namespace Practice2385
 
 
 
-            var test = BankService.FindAccount("ACC002")
-                .OnSuccess(x => BankService.CheckBalance(x, 200m))
-                .OnSuccess(x => BankService.FindReceiver(x, "ACC003"))
-                .OnSuccess(x => BankService.ProcessTransfer(x, 200m))
-                .OnSuccess(x => BankService.GenerateReceipt(x))
-                .Print(ctx =>
-                        $"Transfer complete\n" +
-                        $"{ctx.Sender.Owner} → {ctx.Receiver.Owner}\n" +
-                        $"Amount: {ctx.Amount}\n" +
-                        $"Sender remaining: {ctx.Sender.Balance}");
+            //var test = BankService.FindAccount("ACC002")
+            //    .OnSuccess(x => BankService.CheckBalance(x, 200m))
+            //    .OnSuccess(x => BankService.FindReceiver(x, "ACC003"))
+            //    .OnSuccess(x => BankService.ProcessTransfer(x, 200m))
+            //    .OnSuccess(x => BankService.GenerateReceipt(x))
+            //    .Print(ctx =>
+            //            $"Transfer complete\n" +
+            //            $"{ctx.Sender.Owner} → {ctx.Receiver.Owner}\n" +
+            //            $"Amount: {ctx.Amount}\n" +
+            //            $"Sender remaining: {ctx.Sender.Balance}");
 
+
+
+            
 
 
 
