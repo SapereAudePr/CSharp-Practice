@@ -71,10 +71,10 @@ public class Test
 
     public void TestMethod()
     {
-        var result = new Validator<Person>(new Person("TestName", "testemail@test.com"))
-            .RuleFor("Name", x => x.Name)
-            .NotEmpty()
-            .MinLength(10)
+        //var result = new Validator<Person>(new Person("TestName", "testemail@test.com"))
+        //    .RuleFor("Name", x => x.Name)
+        //    .NotEmpty()
+        //    .MinLength(10)
             
     }
 }

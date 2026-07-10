@@ -2,6 +2,8 @@
 using Practice2385.LoginSystemPainVersion;
 using Practice2385.OrderProcessingPractice;
 using Practice2385.UserServicePractice;
+using Practice2385.ValidatorPractice;
+using Practice2385.ValidatorPractice2;
 
 namespace Practice2385
 {
@@ -101,9 +103,12 @@ namespace Practice2385
 
 
 
-            
+            var test = new ValidatorPractice2.Test();
+            var result = test.Mnx();
 
-
+            if (!result.IsValid)
+                Console.WriteLine(string.Join(Environment.NewLine, result.Errors.Select(
+                    x => x.errorMessage)));
 
             Console.ReadKey();
         }
