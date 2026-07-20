@@ -103,12 +103,7 @@ namespace Practice2385
 
 
 
-            var test = new ValidatorPractice2.Test();
-            var result = test.Mnx();
-
-            if (!result.IsValid)
-                Console.WriteLine(string.Join(Environment.NewLine, result.Errors.Select(
-                    x => x.errorMessage)));
+            
 
             Console.ReadKey();
         }
