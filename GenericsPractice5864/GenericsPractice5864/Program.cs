@@ -62,13 +62,17 @@ namespace GenericsPractice5864
             //Console.WriteLine(message.Delivered);
 
 
+            var messages = new List<ChatMessage>{
+                new ChatMessage("Jane", "Hello", DateTime.UtcNow),
+                new ChatMessage("Jim", "Hey", DateTime.UtcNow),
+                new ChatMessage("Raven", "...", DateTime.UtcNow)};
+
             var result = SendResult<Thread<ChatMessage>>.Ok(
-                new Thread<ChatMessage>(new List<ChatMessage>
-                { new ChatMessage("Jane","Hello", DateTime.UtcNow)}, 5));
+                new Thread<ChatMessage>(messages, 5));
 
 
             Console.WriteLine(result.Delivered);
-            Console.WriteLine(string.Join(Environment.NewLine, 
+            Console.WriteLine(string.Join(Environment.NewLine,
                 result.Payload!.Messages));
 
 
